@@ -1,4 +1,4 @@
-package com.manu.newsapplication.retrofit.newsReponseModel
+package com.manu.newsapplication.newsReponseModel
 
 data class Result(
     val ai_org: String,

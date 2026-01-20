@@ -11,6 +11,6 @@ interface ApiRequests {
     suspend fun getNews(
         @Query("apikey") apiKey: String,
         @Query("q") query: String,
-        @Query("page") page: String
+        @Query("page") page: String?
     ): Response<NetworkResponse>
 }
