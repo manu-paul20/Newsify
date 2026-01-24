@@ -1,12 +1,16 @@
 package com.manu.newsapplication.di
 
+import android.content.Context
+import androidx.room.Room
 import com.manu.newsapplication.constants.MyConstants
+import com.manu.newsapplication.database.NewsDataBase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 import com.manu.newsapplication.retrofit.ApiRequests
+import dagger.hilt.android.qualifiers.ApplicationContext
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -24,6 +28,23 @@ object AppModules {
             .create(ApiRequests::class.java)
     }
 
+    @Provides
+    @Singleton
+    fun provideNewsDataBase(
+        @ApplicationContext context: Context
+    ): NewsDataBase{
+      return  Room.databaseBuilder(
+            context = context,
+            klass = NewsDataBase::class.java,
+            name = "News.DB"
+        ).build()
+    }
 
+    @Provides
+    @Singleton
+    fun provideBookMarksDao(db: NewsDataBase) = db.bookMarksDao
 
+    @Provides
+    @Singleton
+    fun provideOfflineNewsDao(db: NewsDataBase) = db.offlineNewsDao
 }
