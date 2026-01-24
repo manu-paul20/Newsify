@@ -5,7 +5,7 @@ import com.manu.newsapplication.newsReponseModel.newsResponse
 import kotlinx.serialization.Serializable
 
 @Serializable
-interface Routes : NavKey {
+sealed interface Routes : NavKey {
 
     @Serializable
     data object HomeScreen : Routes

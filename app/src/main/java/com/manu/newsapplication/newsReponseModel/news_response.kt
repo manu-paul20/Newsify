@@ -1,6 +1,6 @@
 package com.manu.newsapplication.newsReponseModel
 
-data class newsResponse(
+data class NewsResponse(
     val nextPage: String,
     val results: List<Result>,
     val status: String,

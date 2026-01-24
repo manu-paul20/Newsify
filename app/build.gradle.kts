@@ -4,6 +4,8 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     id("com.google.devtools.ksp")
     id("com.google.dagger.hilt.android")
+    kotlin("plugin.serialization") version "2.3.0"
+
 
 }
 
@@ -79,6 +81,10 @@ dependencies {
     implementation(libs.androidx.navigation3.runtime)
     implementation(libs.androidx.navigation3.ui)
     implementation(libs.androidx.hilt.navigation.fragment)
+    implementation(libs.androidx.lifecycle.viewmodel.navigation3)
+
+    //kotlin Serialization
+    implementation(libs.kotlinx.serialization.json)
 
     //Material Icons Extended
     implementation(libs.androidx.compose.material.icons.extended)
