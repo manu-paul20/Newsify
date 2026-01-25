@@ -13,4 +13,7 @@ sealed interface HomeScreenEvents {
 
     object GetNextPage : HomeScreenEvents
 
+    object ShowFailurePopUp: HomeScreenEvents
+    object HideFailurePopUp: HomeScreenEvents
+
 }

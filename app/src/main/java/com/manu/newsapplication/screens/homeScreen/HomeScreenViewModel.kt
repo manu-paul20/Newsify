@@ -1,7 +1,5 @@
 package com.manu.newsapplication.screens.homeScreen
 
-import android.util.Log
-import androidx.compose.ui.text.toLowerCase
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.manu.newsapplication.domain.MyRepository
@@ -31,7 +29,10 @@ class HomeScreenViewModel @Inject constructor(
         when (event) {
             is HomeScreenEvents.GetInitialNews -> {
                 _state.update {
-                    it.copy(initialResponseStatus = NetworkResponse.Loading)
+                    it.copy(
+                        initialResponseStatus = NetworkResponse.Loading,
+                        searchQuery = event.searchQuery
+                    )
                 }
                     viewModelScope.launch {
                         try {
@@ -45,18 +46,22 @@ class HomeScreenViewModel @Inject constructor(
                                                 it.language?.lowercase() == "english"
                                                                                               },
                                             nextPage = response.body()!!.nextPage,
-                                            searchQuery = event.searchQuery
+                                            isShowingFailurePopup = false
                                         )
                                 }
                             } else {
                                 _state.update {
-                                    it.copy(initialResponseStatus = NetworkResponse.Failure(response.message()))
+                                    it.copy(
+                                        isShowingFailurePopup = true,
+                                        initialResponseStatus = NetworkResponse.Failure(response.message())
+                                    )
                                 }
 
                             }
                         } catch (e: Exception) {
                             _state.update {
                                 it.copy(
+                                    isShowingFailurePopup = true,
                                     initialResponseStatus = NetworkResponse.Failure("Something went wrong")
                                 )
                             }
@@ -76,7 +81,7 @@ class HomeScreenViewModel @Inject constructor(
                 _suggestion.value = event.chip
             }
 
-            is HomeScreenEvents.GetNextPage -> {
+            HomeScreenEvents.GetNextPage -> {
                 if (
                     _state.value.newPageResponseStaus is NetworkResponse.Loading ||
                     _state.value.nextPage == null ||
@@ -93,7 +98,7 @@ class HomeScreenViewModel @Inject constructor(
                                 query = _state.value.searchQuery,
                                 page = _state.value.nextPage
                             )
-                            if (response.isSuccessful || response.body()!=null) {
+                            if (response.isSuccessful && response.body() != null) {
                                 val results = response.body()?.results?:emptyList()
                                 _state.update { st ->
                                     st.copy(
@@ -106,7 +111,9 @@ class HomeScreenViewModel @Inject constructor(
                                 }
                             } else {
                                 _state.update {
-                                    it.copy(newPageResponseStaus = NetworkResponse.Failure(response.message()))
+                                    it.copy(
+                                        newPageResponseStaus = NetworkResponse.Failure(response.message())
+                                    )
                                 }
 
                             }
@@ -123,6 +130,23 @@ class HomeScreenViewModel @Inject constructor(
            is HomeScreenEvents.ShowNewsDetails -> {
 
            }
+
+            is HomeScreenEvents.ShowFailurePopUp -> {
+                _state.update {
+                    it.copy(
+                        isShowingFailurePopup = true
+                    )
+                }
+            }
+
+            is HomeScreenEvents.HideFailurePopUp -> {
+                _state.update {
+                    it.copy(
+                        isShowingFailurePopup = false
+                    )
+                }
+            }
+
 
         }
     }
