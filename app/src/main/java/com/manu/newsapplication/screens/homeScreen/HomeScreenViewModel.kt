@@ -1,0 +1,117 @@
+package com.manu.newsapplication.screens.homeScreen
+
+import android.util.Log
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.manu.newsapplication.domain.MyRepository
+import com.manu.newsapplication.retrofit.NetworkResponse
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import javax.inject.Inject
+
+@HiltViewModel
+class HomeScreenViewModel @Inject constructor(
+    private val repository: MyRepository
+) : ViewModel() {
+    private val _state = MutableStateFlow(HomeScreenStates())
+    private val _suggestion = MutableStateFlow(SuggestionChips.All)
+    val state = combine(_state, _suggestion) { state, suggestion ->
+        state.copy(
+            currentChip = suggestion
+        )
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), HomeScreenStates())
+
+    fun onEvent(event: HomeScreenEvents) {
+        when (event) {
+            is HomeScreenEvents.GetInitialNews -> {
+                _state.update {
+                    it.copy(initialResponseStatus = NetworkResponse.Loading)
+                }
+                    viewModelScope.launch {
+                        try {
+                            val response = repository.getNews(event.searchQuery, null)
+                            if (response.isSuccessful) {
+                                _state.update {
+                                    it.copy(
+                                        initialResponseStatus = NetworkResponse.Success,
+                                        newsList = response.body()!!.results,
+                                        nextPage = response.body()!!.nextPage,
+                                        searchQuery = event.searchQuery
+                                    )
+                                }
+                            } else {
+                                _state.update {
+                                    it.copy(initialResponseStatus = NetworkResponse.Failure(response.message()))
+                                }
+
+                            }
+                        } catch (e: Exception) {
+                            _state.update {
+                                it.copy(
+                                    initialResponseStatus = NetworkResponse.Failure("Something went wrong")
+                                )
+                            }
+                        }
+                    }
+            }
+
+            is HomeScreenEvents.OnSearchQueryChange -> {
+                _state.update {
+                    it.copy(
+                        searchQuery = event.query
+                    )
+                }
+            }
+
+            is HomeScreenEvents.ChangeSuggestionChip -> {
+                _suggestion.value = event.chip
+            }
+
+            is HomeScreenEvents.GetNextPage -> {
+                _state.update {
+                    it.copy(newPageResponseStaus = NetworkResponse.Loading)
+                }
+                    viewModelScope.launch {
+                        try {
+                            val response = repository.getNews(
+                                query = _state.value.searchQuery,
+                                page = _state.value.nextPage
+                            )
+                            if (response.isSuccessful) {
+                                _state.update {
+                                    it.copy(
+                                        newPageResponseStaus = NetworkResponse.Success,
+                                        newsList = _state.value.newsList + response.body()!!.results,
+                                        nextPage = response.body()!!.nextPage
+                                    )
+                                }
+                            } else {
+                                _state.update {
+                                    it.copy(newPageResponseStaus = NetworkResponse.Failure(response.message()))
+                                }
+
+                            }
+                        } catch (e: Exception) {
+                            _state.update {
+                                it.copy(
+                                    newPageResponseStaus = NetworkResponse.Failure("Something went wrong")
+                                )
+                            }
+                        }
+                    }
+            }
+
+           is HomeScreenEvents.ShowNewsDetails -> {
+
+           }
+
+        }
+    }
+
+
+}

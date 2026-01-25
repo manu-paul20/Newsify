@@ -1,5 +1,6 @@
 package com.manu.newsapplication.retrofit
 
+import com.manu.newsapplication.newsReponseModel.NewsResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -12,5 +13,5 @@ interface ApiRequests {
         @Query("apikey") apiKey: String,
         @Query("q") query: String,
         @Query("page") page: String?
-    ): Response<NetworkResponse>
+    ): Response<NewsResponse>
 }

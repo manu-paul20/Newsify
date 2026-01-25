@@ -39,12 +39,4 @@ object AppModules {
             name = "News.DB"
         ).build()
     }
-
-    @Provides
-    @Singleton
-    fun provideBookMarksDao(db: NewsDataBase) = db.bookMarksDao
-
-    @Provides
-    @Singleton
-    fun provideOfflineNewsDao(db: NewsDataBase) = db.offlineNewsDao
 }

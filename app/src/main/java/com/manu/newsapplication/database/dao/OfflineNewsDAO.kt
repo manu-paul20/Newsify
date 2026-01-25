@@ -17,6 +17,6 @@ interface OfflineNewsDAO{
     suspend fun addToBookMarks(offlineNews: OfflineNews)
 
     @Delete
-    suspend fun deleteFromBookMarks(bookMarks: BookMark)
+    suspend fun deleteFromBookMarks(offlineNews: OfflineNews)
 
 }

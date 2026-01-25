@@ -1,5 +1,8 @@
 package com.manu.newsapplication.newsReponseModel
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class Result(
     val ai_org: String,
     val ai_region: String,
@@ -12,7 +15,7 @@ data class Result(
     val creator: List<String>,
     val datatype: String,
     val description: String,
-    val duplicate: Boolean,
+    val duplicate: String,
     val fetched_at: String,
     val image_url: String,
     val keywords: List<String>,
@@ -25,8 +28,8 @@ data class Result(
     val source_icon: String,
     val source_id: String,
     val source_name: String,
-    val source_priority: Int,
+    val source_priority: String,
     val source_url: String,
     val title: String,
-    val video_url: Any
+    val video_url: String
 )
