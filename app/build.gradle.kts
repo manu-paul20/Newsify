@@ -90,4 +90,8 @@ dependencies {
     //Material Icons Extended
     implementation(libs.androidx.compose.material.icons.extended)
 
+    //Coil
+    implementation(libs.coil.network.okhttp)
+    implementation(libs.coil.compose)
+
 }

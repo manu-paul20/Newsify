@@ -10,5 +10,6 @@ data class HomeScreenStates(
     val currentChip: SuggestionChips = SuggestionChips.All,
     val newsList : List<Result> = emptyList(),
     val searchQuery : String = "",
-    val isShowingFailurePopup: Boolean = false
+    val isShowingFailurePopup: Boolean = false,
+    val errorMessage: String = ""
 )

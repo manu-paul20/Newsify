@@ -12,6 +12,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.manu.newsapplication.screens.homeScreen.HomeScreenEvents
 import com.manu.newsapplication.screens.homeScreen.HomeScreenStates
 
@@ -33,6 +34,7 @@ fun FailurePopUp(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text("Oops! Something went wrong 🤔")
+                Text(state.errorMessage, fontSize = 18.sp)
             }
         },
         confirmButton = {

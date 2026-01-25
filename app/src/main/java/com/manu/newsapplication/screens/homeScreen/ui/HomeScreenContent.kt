@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.RestartAlt
@@ -50,32 +51,37 @@ fun HomeScreenContent(
 
         NetworkResponse.Success -> {
             LazyColumn(
-                modifier = modifier.fillMaxSize(),
+                modifier = modifier.fillMaxSize().padding(horizontal = 10.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 items(state.newsList.size){index->
-                    if(index==state.newsList.size-1){
+                    if (index == state.newsList.size - 1 &&
+                        state.newPageResponseStaus is NetworkResponse.Success
+                    ) {
                         onEvent(HomeScreenEvents.GetNextPage)
                     }
                     val item = state.newsList[index]
-                    ListItem(
-                        headlineContent = {Text(item.title?:"No Title")},
-                        supportingContent = {Text(item.description?:"No Description")}
-                    )
+                    NewsListItem(item)
                 }
                 item{
                     when(state.newPageResponseStaus){
+
                         is NetworkResponse.Loading -> {
                             Row(
-                                modifier = modifier.fillMaxWidth(),
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .padding(bottom = 100.dp),
                                 horizontalArrangement = Arrangement.Center
                             ) {
                                 CircularProgressIndicator()
                             }
                         }
+
                         is NetworkResponse.Failure -> {
                             Column(
-                                modifier = modifier.fillMaxWidth(),
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(bottom = 100.dp),
                                 horizontalAlignment = Alignment.CenterHorizontally
                             ) {
                                 Text("Failed to load next page")

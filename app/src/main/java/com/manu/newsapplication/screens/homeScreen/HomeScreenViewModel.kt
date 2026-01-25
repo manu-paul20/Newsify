@@ -39,7 +39,6 @@ class HomeScreenViewModel @Inject constructor(
                     viewModelScope.launch {
                         try {
                             val response = repository.getNews(event.searchQuery, null)
-                            Log.i("STAT",response.body().toString())
                             if (response.isSuccessful && response.body() != null) {
                                 val results = response.body()?.results?:emptyList()
                                 _state.update { st ->
@@ -55,6 +54,7 @@ class HomeScreenViewModel @Inject constructor(
                             } else {
                                 _state.update {
                                     it.copy(
+                                        errorMessage = response.message(),
                                         isShowingFailurePopup = true,
                                         initialResponseStatus = NetworkResponse.Failure(response.message())
                                     )
@@ -64,6 +64,7 @@ class HomeScreenViewModel @Inject constructor(
                         } catch (e: Exception) {
                             _state.update {
                                 it.copy(
+                                    errorMessage = e.message.toString(),
                                     isShowingFailurePopup = true,
                                     initialResponseStatus = NetworkResponse.Failure("Something went wrong")
                                 )
