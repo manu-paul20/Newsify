@@ -1,6 +1,7 @@
 package com.manu.newsapplication.screens.homeScreen
 
 import android.util.Log
+import androidx.compose.ui.text.toLowerCase
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.manu.newsapplication.domain.MyRepository
@@ -35,14 +36,17 @@ class HomeScreenViewModel @Inject constructor(
                     viewModelScope.launch {
                         try {
                             val response = repository.getNews(event.searchQuery, null)
-                            if (response.isSuccessful) {
-                                _state.update {
-                                    it.copy(
-                                        initialResponseStatus = NetworkResponse.Success,
-                                        newsList = response.body()!!.results,
-                                        nextPage = response.body()!!.nextPage,
-                                        searchQuery = event.searchQuery
-                                    )
+                            if (response.isSuccessful && response.body() != null) {
+                                val results = response.body()?.results?:emptyList()
+                                    _state.update { st ->
+                                        st.copy(
+                                            initialResponseStatus = NetworkResponse.Success,
+                                            newsList = results.distinctBy { it.title }.filter {
+                                                it.language?.lowercase() == "english"
+                                                                                              },
+                                            nextPage = response.body()!!.nextPage,
+                                            searchQuery = event.searchQuery
+                                        )
                                 }
                             } else {
                                 _state.update {
@@ -73,6 +77,13 @@ class HomeScreenViewModel @Inject constructor(
             }
 
             is HomeScreenEvents.GetNextPage -> {
+                if (
+                    _state.value.newPageResponseStaus is NetworkResponse.Loading ||
+                    _state.value.nextPage == null ||
+                    _state.value.initialResponseStatus is NetworkResponse.Loading
+                ) {
+                    return
+                }
                 _state.update {
                     it.copy(newPageResponseStaus = NetworkResponse.Loading)
                 }
@@ -82,11 +93,14 @@ class HomeScreenViewModel @Inject constructor(
                                 query = _state.value.searchQuery,
                                 page = _state.value.nextPage
                             )
-                            if (response.isSuccessful) {
-                                _state.update {
-                                    it.copy(
+                            if (response.isSuccessful || response.body()!=null) {
+                                val results = response.body()?.results?:emptyList()
+                                _state.update { st ->
+                                    st.copy(
                                         newPageResponseStaus = NetworkResponse.Success,
-                                        newsList = _state.value.newsList + response.body()!!.results,
+                                        newsList = _state.value.newsList + results.distinctBy {
+                                            it.title
+                                        }.filter { it?.language == "english" },
                                         nextPage = response.body()!!.nextPage
                                     )
                                 }

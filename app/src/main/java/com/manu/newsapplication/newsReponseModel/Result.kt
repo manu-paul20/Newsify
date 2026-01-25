@@ -31,5 +31,5 @@ data class Result(
     val source_priority: String,
     val source_url: String,
     val title: String,
-    val video_url: String
+    val video_url: String?
 )
