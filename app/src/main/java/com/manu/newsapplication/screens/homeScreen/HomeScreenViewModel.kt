@@ -1,5 +1,6 @@
 package com.manu.newsapplication.screens.homeScreen
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.manu.newsapplication.domain.MyRepository
@@ -17,6 +18,7 @@ import javax.inject.Inject
 class HomeScreenViewModel @Inject constructor(
     private val repository: MyRepository
 ) : ViewModel() {
+
     private val _state = MutableStateFlow(HomeScreenStates())
     private val _suggestion = MutableStateFlow(SuggestionChips.All)
     val state = combine(_state, _suggestion) { state, suggestion ->
@@ -37,9 +39,10 @@ class HomeScreenViewModel @Inject constructor(
                     viewModelScope.launch {
                         try {
                             val response = repository.getNews(event.searchQuery, null)
+                            Log.i("STAT",response.body().toString())
                             if (response.isSuccessful && response.body() != null) {
                                 val results = response.body()?.results?:emptyList()
-                                    _state.update { st ->
+                                _state.update { st ->
                                         st.copy(
                                             initialResponseStatus = NetworkResponse.Success,
                                             newsList = results.distinctBy { it.title }.filter {
@@ -82,13 +85,6 @@ class HomeScreenViewModel @Inject constructor(
             }
 
             HomeScreenEvents.GetNextPage -> {
-                if (
-                    _state.value.newPageResponseStaus is NetworkResponse.Loading ||
-                    _state.value.nextPage == null ||
-                    _state.value.initialResponseStatus is NetworkResponse.Loading
-                ) {
-                    return
-                }
                 _state.update {
                     it.copy(newPageResponseStaus = NetworkResponse.Loading)
                 }
@@ -99,13 +95,15 @@ class HomeScreenViewModel @Inject constructor(
                                 page = _state.value.nextPage
                             )
                             if (response.isSuccessful && response.body() != null) {
-                                val results = response.body()?.results?:emptyList()
+                                val results = response.body()!!.results
                                 _state.update { st ->
                                     st.copy(
                                         newPageResponseStaus = NetworkResponse.Success,
-                                        newsList = _state.value.newsList + results.distinctBy {
+                                        newsList = (_state.value.newsList + results.filter {
+                                            it.language!!.lowercase() == "english"
+                                        }).distinctBy {
                                             it.title
-                                        }.filter { it?.language == "english" },
+                                        },
                                         nextPage = response.body()!!.nextPage
                                     )
                                 }
