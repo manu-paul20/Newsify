@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -53,17 +54,21 @@ fun NewsListItem(
 
             Box(
                 modifier = Modifier
-                    .size(100.dp).padding(5.dp)
-                    .clip(RoundedCornerShape(12.dp)),
-                contentAlignment = Alignment.Center
+                    .size(100.dp).padding(5.dp),
             ){
                 SubcomposeAsyncImage(
+                    modifier = Modifier
+                        .aspectRatio(1.1f)
+                        .clip(RoundedCornerShape(12.dp))
+                    ,
                     model = item.image_url,
                     error = {
                         Icon(Icons.Default.HideImage, null)
                     },
                     loading = {
-                        CircularProgressIndicator()
+                        Box(
+                            contentAlignment = Alignment.Center
+                        ){CircularProgressIndicator()}
                     },
                     contentScale = ContentScale.Crop,
                     contentDescription = null
