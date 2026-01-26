@@ -50,53 +50,11 @@ fun HomeScreenContent(
         }
 
         NetworkResponse.Success -> {
-            LazyColumn(
-                modifier = modifier.fillMaxSize().padding(horizontal = 10.dp),
-                verticalArrangement = Arrangement.spacedBy(16.dp)
-            ) {
-                items(state.newsList.size){index->
-                    if (index == state.newsList.size - 1 &&
-                        state.newPageResponseStaus is NetworkResponse.Success
-                    ) {
-                        onEvent(HomeScreenEvents.GetNextPage)
-                    }
-                    val item = state.newsList[index]
-                    NewsListItem(item)
-                }
-                item{
-                    when(state.newPageResponseStaus){
-
-                        is NetworkResponse.Loading -> {
-                            Row(
-                                modifier = Modifier
-                                    .fillMaxSize()
-                                    .padding(bottom = 100.dp),
-                                horizontalArrangement = Arrangement.Center
-                            ) {
-                                CircularProgressIndicator()
-                            }
-                        }
-
-                        is NetworkResponse.Failure -> {
-                            Column(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(bottom = 100.dp),
-                                horizontalAlignment = Alignment.CenterHorizontally
-                            ) {
-                                Text("Failed to load next page")
-                                IconButton(
-                                    onClick = {
-                                        onEvent(HomeScreenEvents.GetNextPage)
-                                    }
-                                ) {
-                                    Icon(Icons.Default.RestartAlt,null)
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+           NewsList(
+               modifier = modifier,
+               state = state,
+               onEvent = onEvent
+           )
         }
 
 
