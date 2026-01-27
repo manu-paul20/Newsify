@@ -9,7 +9,7 @@ import retrofit2.Response
 interface MyRepository {
 
     suspend fun getNews(
-        query: String,
+        query: String?,
         page: String?
     ): Response<NewsResponse>
 

@@ -32,8 +32,7 @@ class HomeScreenViewModel @Inject constructor(
             is HomeScreenEvents.GetInitialNews -> {
                 _state.update {
                     it.copy(
-                        initialResponseStatus = NetworkResponse.Loading,
-                        searchQuery = event.searchQuery
+                        initialResponseStatus = NetworkResponse.Loading
                     )
                 }
                     viewModelScope.launch {
@@ -83,6 +82,8 @@ class HomeScreenViewModel @Inject constructor(
 
             is HomeScreenEvents.ChangeSuggestionChip -> {
                 _suggestion.value = event.chip
+                onEvent(HomeScreenEvents.GetInitialNews(event.chip.name))
+
             }
 
             HomeScreenEvents.GetNextPage -> {
@@ -92,7 +93,7 @@ class HomeScreenViewModel @Inject constructor(
                     viewModelScope.launch {
                         try {
                             val response = repository.getNews(
-                                query = _state.value.searchQuery,
+                                query = null,
                                 page = _state.value.nextPage
                             )
                             if (response.isSuccessful && response.body() != null) {

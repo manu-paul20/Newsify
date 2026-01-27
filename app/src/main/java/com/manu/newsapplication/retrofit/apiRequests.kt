@@ -11,7 +11,7 @@ interface ApiRequests {
     @GET("/api/1/latest")
     suspend fun getNews(
         @Query("apikey") apiKey: String,
-        @Query("q") query: String,
+        @Query("q") query: String?,
         @Query("page") page: String?
     ): Response<NewsResponse>
 }

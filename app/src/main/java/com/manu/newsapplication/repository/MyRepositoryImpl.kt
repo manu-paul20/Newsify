@@ -14,7 +14,7 @@ class MyRepositoryImpl @Inject constructor(
     private val apiRequests: ApiRequests,
     private val db: NewsDataBase
 ): MyRepository {
-    override suspend fun getNews(query: String, page: String?) : retrofit2.Response<NewsResponse>{
+    override suspend fun getNews(query: String?, page: String?) : retrofit2.Response<NewsResponse>{
         return apiRequests.getNews(
             apiKey = MyConstants.API_KEY,
             query = query,

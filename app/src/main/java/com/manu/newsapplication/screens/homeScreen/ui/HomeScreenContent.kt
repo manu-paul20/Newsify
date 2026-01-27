@@ -31,7 +31,7 @@ fun HomeScreenContent(
     onEvent: (HomeScreenEvents) -> Unit
 ) {
     LaunchedEffect(Unit) {
-        onEvent(HomeScreenEvents.GetInitialNews("All"))
+        onEvent(HomeScreenEvents.GetInitialNews())
     }
 
     if(state.isShowingFailurePopup){
