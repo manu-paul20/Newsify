@@ -1,6 +1,5 @@
 package com.manu.newsapplication.screens.homeScreen.ui
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement

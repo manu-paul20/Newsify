@@ -127,10 +127,6 @@ class HomeScreenViewModel @Inject constructor(
                     }
             }
 
-           is HomeScreenEvents.ShowNewsDetails -> {
-
-           }
-
             is HomeScreenEvents.ShowFailurePopUp -> {
                 _state.update {
                     it.copy(

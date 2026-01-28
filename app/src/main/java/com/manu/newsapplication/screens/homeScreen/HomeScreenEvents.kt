@@ -7,7 +7,6 @@ sealed interface HomeScreenEvents {
 
     data class OnSearchQueryChange(val query: String): HomeScreenEvents
 
-    data class ShowNewsDetails(val newsResponse: NewsResponse): HomeScreenEvents
 
     data class ChangeSuggestionChip(val chip: SuggestionChips): HomeScreenEvents
 
