@@ -5,6 +5,7 @@ import androidx.compose.ui.platform.LocalUriHandler
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.manu.newsapplication.database.NewsDataBase
+import com.manu.newsapplication.database.entities.OfflineNews
 import com.manu.newsapplication.domain.MyRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -27,7 +28,11 @@ class DetailsScreenViewModel @Inject constructor(
         when(event){
             is DetailsScreenEvents.SaveNews -> {
                 viewModelScope.launch {
-                    offlineTodoDao.
+                    offlineTodoDao.addToOfflineNews(
+                        OfflineNews(
+
+                        )
+                    )
                 }
             }
 

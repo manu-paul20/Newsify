@@ -7,10 +7,8 @@ import androidx.room.PrimaryKey
 data class OfflineNews(
     val content: String,
     val description: String,
-    val link: String,
     val pubDate: String,
     val source_name: String,
-    val source_url: String,
     @PrimaryKey val title: String,
 )
 
