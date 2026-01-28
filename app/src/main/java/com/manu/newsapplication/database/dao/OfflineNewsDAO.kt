@@ -17,6 +17,6 @@ interface OfflineNewsDAO{
     suspend fun addToOfflineNews(offlineNews: OfflineNews)
 
     @Delete
-    suspend fun deleteFromOffline(offlineNews: OfflineNews)
+    suspend fun deleteFromOfflineNews(offlineNews: OfflineNews)
 
 }
