@@ -1,5 +1,6 @@
 package com.manu.newsapplication.screens.homeScreen.ui
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
@@ -14,6 +15,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.RestartAlt
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FilterChip
+import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.SuggestionChip
@@ -49,6 +51,11 @@ fun NewsList(
             ) {
                 SuggestionChips.entries.forEach {
                     FilterChip(
+                        colors = FilterChipDefaults.filterChipColors(
+                            containerColor = Color(0x1AFFFFFF),
+                            selectedContainerColor = Color(0xCC005FB7),
+                            selectedLabelColor = Color(0xFFE2E2E6)
+                        ),
                         selected =(state.currentChip == it),
                         onClick = {
                             onEvent(HomeScreenEvents.ChangeSuggestionChip(it))
