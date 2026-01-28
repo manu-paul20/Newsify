@@ -49,7 +49,11 @@ fun NavigationRoot(){
                 navigationState.toEntries(
                     entryProvider = entryProvider {
                         entry <Routes.HomeScreen>{
-                            HomeScreen()
+                            HomeScreen(
+                                onClickNews = {
+                                    TODO("Not yet implemented")
+                                }
+                            )
                         }
                         entry <Routes.NewsDetailsScreen>{
 

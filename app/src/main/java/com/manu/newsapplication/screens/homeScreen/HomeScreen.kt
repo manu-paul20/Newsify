@@ -25,6 +25,7 @@ import com.manu.newsapplication.screens.homeScreen.ui.HomeScreenTopAppBar
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
+    onClickNews:()-> Unit,
     viewModel: HomeScreenViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
