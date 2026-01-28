@@ -11,12 +11,12 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface OfflineNewsDAO{
     @Query("SELECT * FROM OfflineNews")
-    fun getBookMarks(): Flow<List<OfflineNews>>
+    fun getOfflineNews(): Flow<List<OfflineNews>>
 
     @Insert
-    suspend fun addToBookMarks(offlineNews: OfflineNews)
+    suspend fun addToOfflineNews(offlineNews: OfflineNews)
 
     @Delete
-    suspend fun deleteFromBookMarks(offlineNews: OfflineNews)
+    suspend fun deleteFromOffline(offlineNews: OfflineNews)
 
 }

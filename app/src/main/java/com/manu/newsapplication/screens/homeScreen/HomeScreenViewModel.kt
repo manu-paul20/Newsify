@@ -1,9 +1,9 @@
 package com.manu.newsapplication.screens.homeScreen
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.manu.newsapplication.domain.MyRepository
+import com.manu.newsapplication.constants.MyConstants
+import com.manu.newsapplication.retrofit.ApiRequests
 import com.manu.newsapplication.retrofit.NetworkResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeScreenViewModel @Inject constructor(
-    private val repository: MyRepository
+    private val api: ApiRequests
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(HomeScreenStates())
@@ -37,9 +37,13 @@ class HomeScreenViewModel @Inject constructor(
                 }
                     viewModelScope.launch {
                         try {
-                            val response = repository.getNews(event.searchQuery, null)
+                            val response = api.getNews(
+                                apiKey = MyConstants.API_KEY,
+                                query = event.searchQuery,
+                                page = null
+                            )
                             if (response.isSuccessful && response.body() != null) {
-                                val results = response.body()?.results?:emptyList()
+                                val results = response.body()?.news ?: emptyList()
                                 _state.update { st ->
                                         st.copy(
                                             initialResponseStatus = NetworkResponse.Success,
@@ -92,12 +96,13 @@ class HomeScreenViewModel @Inject constructor(
                 }
                     viewModelScope.launch {
                         try {
-                            val response = repository.getNews(
+                            val response = api.getNews(
+                                apiKey = MyConstants.API_KEY,
                                 query = null,
                                 page = _state.value.nextPage
                             )
                             if (response.isSuccessful && response.body() != null) {
-                                val results = response.body()!!.results
+                                val results = response.body()!!.news
                                 _state.update { st ->
                                     st.copy(
                                         newPageResponseStaus = NetworkResponse.Success,

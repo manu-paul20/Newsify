@@ -3,7 +3,7 @@ package com.manu.newsapplication.newsReponseModel
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Result(
+data class News(
     val ai_org: String?,
     val ai_region: String?,
     val ai_summary: String?,
