@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class NewsResponse(
     val nextPage: String?,
-    val news: List<News>,
+    val results: List<Results>,
     val status: String?,
     val totalResults: String?
 )

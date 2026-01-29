@@ -1,6 +1,7 @@
 package com.manu.newsapplication.screens.homeScreen.ui
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -30,11 +31,12 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.SubcomposeAsyncImage
-import com.manu.newsapplication.newsReponseModel.News
+import com.manu.newsapplication.newsReponseModel.Results
 
 @Composable
 fun NewsListItem(
-    item: News
+    onClickNews:()-> Unit,
+    item: Results
 ) {
     Card(
         shape = RoundedCornerShape(16.dp),
@@ -45,6 +47,7 @@ fun NewsListItem(
     ) {
         Row(
             modifier = Modifier
+                .clickable{onClickNews()}
                 .fillMaxWidth(),
             verticalAlignment = Alignment.Top
         ) {
@@ -96,13 +99,13 @@ fun NewsListItem(
                 ) {
                     Text(
                         text = item.source_name?:"",
-                        fontSize = 10.sp,
+                        fontSize = 11.sp,
                         color = Color(0xFF005FB7)
                     )
                     Text(" • ")
                     Text(
                         text = item.pubDate?.substring(0,11)?:"",
-                        fontSize = 10.sp,
+                        fontSize = 11.sp,
                         color = Color(0xFF74777F)
                     )
                 }

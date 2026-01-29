@@ -1,5 +1,6 @@
 package com.manu.newsapplication.screens.homeScreen
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.manu.newsapplication.constants.MyConstants
@@ -42,12 +43,13 @@ class HomeScreenViewModel @Inject constructor(
                                 query = event.searchQuery,
                                 page = null
                             )
+                            Log.i("RESPONSE",response.body().toString())
                             if (response.isSuccessful && response.body() != null) {
-                                val results = response.body()?.news ?: emptyList()
+                                val results = response.body()?.results ?: emptyList()
                                 _state.update { st ->
                                         st.copy(
                                             initialResponseStatus = NetworkResponse.Success,
-                                            newsList = results.distinctBy { it.title }.filter {
+                                            resultsList = results.distinctBy { it.title }.filter {
                                                 it.language?.lowercase() == "english"
                                                                                               },
                                             nextPage = response.body()!!.nextPage,
@@ -102,11 +104,11 @@ class HomeScreenViewModel @Inject constructor(
                                 page = _state.value.nextPage
                             )
                             if (response.isSuccessful && response.body() != null) {
-                                val results = response.body()!!.news
+                                val results = response.body()!!.results
                                 _state.update { st ->
                                     st.copy(
                                         newPageResponseStaus = NetworkResponse.Success,
-                                        newsList = (_state.value.newsList + results.filter {
+                                        resultsList = (_state.value.resultsList + results.filter {
                                             it.language!!.lowercase() == "english"
                                         }).distinctBy {
                                             it.title

@@ -1,5 +1,6 @@
 package com.manu.newsapplication.screens.homeScreen.ui
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
@@ -17,7 +18,6 @@ import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.SuggestionChip
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -26,11 +26,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.manu.newsapplication.retrofit.NetworkResponse
 import com.manu.newsapplication.screens.homeScreen.HomeScreenEvents
+import com.manu.newsapplication.screens.homeScreen.HomeScreenNavigation
 import com.manu.newsapplication.screens.homeScreen.HomeScreenStates
 import com.manu.newsapplication.screens.homeScreen.SuggestionChips
 
 @Composable
 fun NewsList(
+    navigation: HomeScreenNavigation,
     modifier: Modifier,
     state: HomeScreenStates,
     onEvent: (HomeScreenEvents) -> Unit
@@ -46,7 +48,9 @@ fun NewsList(
         item {
             Row(
                 horizontalArrangement = Arrangement.spacedBy(5.dp),
-                modifier = Modifier.fillMaxWidth().horizontalScroll(rememberScrollState())
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .horizontalScroll(rememberScrollState())
             ) {
                 SuggestionChips.entries.forEach {
                     FilterChip(
@@ -64,15 +68,19 @@ fun NewsList(
                 }
             }
         }
-
-        items(state.newsList.size) { index ->
-            if (index == state.newsList.size - 1 &&
+        items(state.resultsList.size) { index ->
+            if (index == state.resultsList.size - 1 &&
                 state.newPageResponseStaus is NetworkResponse.Success
             ) {
                 onEvent(HomeScreenEvents.GetNextPage)
             }
-            val item = state.newsList[index]
-            NewsListItem(item)
+            val item = state.resultsList[index]
+            NewsListItem(
+                onClickNews = { navigation.newsDetails(item) },
+                item = item
+            )
+
+
         }
         item {
             when (state.newPageResponseStaus) {

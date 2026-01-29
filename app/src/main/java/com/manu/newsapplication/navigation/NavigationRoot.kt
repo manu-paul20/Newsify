@@ -18,6 +18,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.ui.NavDisplay
 import com.manu.newsapplication.screens.homeScreen.HomeScreen
+import com.manu.newsapplication.screens.homeScreen.HomeScreenNavigation
+import com.manu.newsapplication.screens.newsDetailsScreen.ui.NewsDetailsScreen
 import okhttp3.Route
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -49,14 +51,22 @@ fun NavigationRoot(){
                 navigationState.toEntries(
                     entryProvider = entryProvider {
                         entry <Routes.HomeScreen>{
-                            HomeScreen(
-                                onClickNews = {
-                                    TODO("Not yet implemented")
+                            val nav = HomeScreenNavigation(
+                                newsDetails = {
+                                    navigator.navigate(Routes.NewsDetailsScreen(it))
+                                },
+                                offlineNews = {
+                                   navigator.navigate(Routes.OfflineNewsScreen)
                                 }
+                            )
+                            HomeScreen(
+                                navigation = nav
                             )
                         }
                         entry <Routes.NewsDetailsScreen>{
-
+                            NewsDetailsScreen(
+                                it.results
+                            )
                         }
                         entry <Routes.BookMarksScreen>{
 

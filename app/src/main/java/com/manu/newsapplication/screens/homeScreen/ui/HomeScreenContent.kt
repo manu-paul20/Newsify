@@ -22,11 +22,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.manu.newsapplication.retrofit.NetworkResponse
 import com.manu.newsapplication.screens.homeScreen.HomeScreenEvents
+import com.manu.newsapplication.screens.homeScreen.HomeScreenNavigation
 import com.manu.newsapplication.screens.homeScreen.HomeScreenStates
 
 @Composable
 fun HomeScreenContent(
     modifier: Modifier,
+    navigation: HomeScreenNavigation,
     state: HomeScreenStates,
     onEvent: (HomeScreenEvents) -> Unit
 ) {
@@ -51,6 +53,7 @@ fun HomeScreenContent(
 
         NetworkResponse.Success -> {
            NewsList(
+              navigation = navigation,
                modifier = modifier,
                state = state,
                onEvent = onEvent

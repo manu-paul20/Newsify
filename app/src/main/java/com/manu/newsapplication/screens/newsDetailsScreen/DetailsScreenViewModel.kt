@@ -1,43 +1,88 @@
 package com.manu.newsapplication.screens.newsDetailsScreen
 
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.LocalUriHandler
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.manu.newsapplication.database.NewsDataBase
+import com.manu.newsapplication.database.entities.BookMarks
 import com.manu.newsapplication.database.entities.OfflineNews
-import com.manu.newsapplication.domain.MyRepository
+import com.manu.newsapplication.repository.DatabaseRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class DetailsScreenViewModel @Inject constructor(
-   private val db: NewsDataBase
-): ViewModel(){
+    repository: DatabaseRepository
+): ViewModel() {
     private val _state = MutableStateFlow(DetailsScreenStates())
     val state = _state.asStateFlow()
 
-    val offlineTodoDao = db.offlineNewsDao
-    val bookMarksDao = db.bookMarksDao
+    val offlineTodoDao = repository.getOfflineNewsDao()
+    val bookMarksDao = repository.getBookMarksDao()
 
 
-    fun onEvent(event: DetailsScreenEvents){
-        when(event){
+    fun onEvent(event: DetailsScreenEvents) {
+        when (event) {
             is DetailsScreenEvents.SaveNews -> {
                 viewModelScope.launch {
+                    val news = event.results
                     offlineTodoDao.addToOfflineNews(
                         OfflineNews(
-
+                            title = news.title ?: "",
+                            description = news.description ?: "",
+                            source_name = news.source_name ?: "",
+                            pubDate = news.pubDate ?: ""
                         )
+                    )
+                }
+
+                _state.update {
+                    it.copy(
+                        isSaved = true
                     )
                 }
             }
 
             is DetailsScreenEvents.BookMarkNews -> {
+                val news = event.results
+                viewModelScope.launch {
+                    bookMarksDao.addToBookMarks(
+                        BookMarks(
+                            title = news.title ?: "",
+                            description = news.description ?: "",
+                            image_url = news.image_url ?: "",
+                            link = news.link ?: "",
+                            pubDate = news.pubDate ?: "",
+                            source_name = news.source_name ?: "",
+                            source_url = news.source_url ?: "",
+                        )
+                    )
+                }
 
+                _state.update {
+                    it.copy(
+                        isBookMarked = true
+                    )
+                }
+            }
+
+            is DetailsScreenEvents.RemoveBookMark -> {
+                val news = event.results
+                viewModelScope.launch {
+                    bookMarksDao.deleteFromBookMarks(
+                        BookMarks(
+                            title = news.title ?: "",
+                            description = news.description ?: "",
+                            image_url = news.image_url ?: "",
+                            link = news.link ?: "",
+                            pubDate = news.pubDate ?: "",
+                            source_name = news.source_name ?: "",
+                            source_url = news.source_url ?: "",
+                        )
+                    )
+                }
             }
         }
     }
