@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -14,6 +16,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.ui.NavDisplay
@@ -32,14 +36,31 @@ fun NavigationRoot(){
     val navigator = remember {
         Navigator(navigationState)
     }
+    val localUriHandler = LocalUriHandler.current
+    val currentRoute = navigationState.backStack[navigationState.topLevelRoute]?.lastOrNull()
     Scaffold(
         bottomBar = {
-            BottomNavigationBar(
-                selectedKey = navigationState.topLevelRoute,
-                onSelectKey = {
-                    navigator.navigate(it)
-                }
-            )
+            if(currentRoute is Routes.NewsDetailsScreen){
+                BottomAppBar(
+                    content = {
+                        Button(
+                            modifier = Modifier.fillMaxWidth().padding(10.dp),
+                            onClick = {
+                             localUriHandler.openUri(currentRoute.results.source_url?:"")
+                            }
+                        ) {
+                            Text("Read full news")
+                        }
+                    }
+                )
+            }else{
+                BottomNavigationBar(
+                    selectedKey = navigationState.topLevelRoute,
+                    onSelectKey = {
+                        navigator.navigate(it)
+                    }
+                )
+            }
         },
     ) {_->
         NavDisplay(
