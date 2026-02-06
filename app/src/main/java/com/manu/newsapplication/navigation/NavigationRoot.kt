@@ -46,7 +46,7 @@ fun NavigationRoot(){
                         Button(
                             modifier = Modifier.fillMaxWidth().padding(10.dp),
                             onClick = {
-                             localUriHandler.openUri(currentRoute.results.source_url?:"")
+                             localUriHandler.openUri(currentRoute.results.sourceUrl)
                             }
                         ) {
                             Text("Read full news")

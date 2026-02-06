@@ -1,6 +1,5 @@
 package com.manu.newsapplication.screens.homeScreen.ui
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
@@ -29,6 +28,7 @@ import com.manu.newsapplication.screens.homeScreen.HomeScreenEvents
 import com.manu.newsapplication.screens.homeScreen.HomeScreenNavigation
 import com.manu.newsapplication.screens.homeScreen.HomeScreenStates
 import com.manu.newsapplication.screens.homeScreen.SuggestionChips
+import com.manu.newsapplication.screens.newsDetailsScreen.Details
 
 @Composable
 fun NewsList(
@@ -76,7 +76,16 @@ fun NewsList(
             }
             val item = state.resultsList[index]
             NewsListItem(
-                onClickNews = { navigation.newsDetails(item) },
+                onClickNews = { navigation.newsDetails(
+                    Details(
+                        imageUrl = item.image_url?:"",
+                        title = item.title?:"",
+                        description = item.description?:"",
+                        pubDate = item.pubDate?:"",
+                        source = item.source_name?:"",
+                        sourceUrl = item.source_url?:""
+                    )
+                ) },
                 item = item
             )
 

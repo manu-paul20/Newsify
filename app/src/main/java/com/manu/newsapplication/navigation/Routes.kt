@@ -2,6 +2,7 @@ package com.manu.newsapplication.navigation
 
 import androidx.navigation3.runtime.NavKey
 import com.manu.newsapplication.newsReponseModel.Results
+import com.manu.newsapplication.screens.newsDetailsScreen.Details
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -17,6 +18,6 @@ sealed interface Routes : NavKey {
     data object OfflineNewsScreen : Routes
 
     @Serializable
-    data class NewsDetailsScreen(val results: Results): Routes
+    data class NewsDetailsScreen(val results: Details): Routes
 
 }
