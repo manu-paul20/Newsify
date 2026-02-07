@@ -9,9 +9,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Bookmark
 import androidx.compose.material.icons.filled.BrokenImage
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -28,12 +31,13 @@ import com.manu.newsapplication.screens.newsDetailsScreen.DetailsScreenStates
 
 @Composable
 fun DetailsScreenContent(
+    modifier: Modifier,
     results: Details,
     state: DetailsScreenStates,
     onEvent:(DetailsScreenEvents)-> Unit
 ) {
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Top
     ) {
         Box(
@@ -51,6 +55,7 @@ fun DetailsScreenContent(
                     contentScale = ContentScale.Crop,
                     error = { Icon(Icons.Default.BrokenImage, null) },
                 )
+
         }
         // title
         Text(
