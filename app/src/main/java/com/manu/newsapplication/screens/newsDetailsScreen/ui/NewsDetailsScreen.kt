@@ -9,8 +9,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Bookmark
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.SaveAlt
 import androidx.compose.material.icons.outlined.Bookmark
+import androidx.compose.material.icons.outlined.BookmarkAdd
+import androidx.compose.material.icons.outlined.BookmarkAdded
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FabPosition
@@ -25,8 +28,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.manu.newsapplication.database.entities.BookMarks
 import com.manu.newsapplication.newsReponseModel.Results
 import com.manu.newsapplication.screens.newsDetailsScreen.Details
+import com.manu.newsapplication.screens.newsDetailsScreen.DetailsScreenEvents
 import com.manu.newsapplication.screens.newsDetailsScreen.DetailsScreenViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -51,14 +56,37 @@ fun NewsDetailsScreen(
                        Spacer(Modifier.weight(1f))
 
                        IconButton(
-                           onClick = {}
+                           onClick = {
+                               if(state.value.isBookMarked){
+                                   onEvent(DetailsScreenEvents.RemoveBookMark(results))
+                               }else{
+                                   onEvent(DetailsScreenEvents.BookMarkNews(results))
+                               }
+                           }
                        ) {
-                           Icon(Icons.Outlined.Bookmark,null)
+                           Icon(
+                               imageVector = if(state.value.isBookMarked){
+                                   Icons.Outlined.Bookmark
+                               }else{
+                                   Icons.Outlined.BookmarkAdd
+                               },
+                               contentDescription = null
+                           )
                        }
                        IconButton(
-                           onClick = {}
+                           onClick = {
+                               if (!state.value.isSaved){
+                                   onEvent(DetailsScreenEvents.SaveNews(results))
+                               }
+                           }
                        ) {
-                           Icon(Icons.Default.SaveAlt,null)
+                           Icon(
+                               imageVector = if(state.value.isSaved){
+                                   Icons.Default.Check
+                               }else{
+                                   Icons.Default.SaveAlt
+                               },
+                               contentDescription = null)
                        }
                    }
                }

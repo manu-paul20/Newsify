@@ -40,46 +40,7 @@ fun DetailsScreenContent(
         modifier = modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Top
     ) {
-        Box(
-            modifier = Modifier
-                .height(300.dp)
-                .fillMaxWidth(),
-            contentAlignment = Alignment.TopCenter
-        ){
-                SubcomposeAsyncImage(
-                    model = results.imageUrl,
-                    contentDescription = null,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .fillMaxHeight(),
-                    contentScale = ContentScale.Crop,
-                    error = { Icon(Icons.Default.BrokenImage, null) },
-                )
-
-        }
-        // title
-        Text(
-            text = results.title,
-            fontSize = 20.sp,
-            fontWeight = FontWeight.Bold
-        )
-        HorizontalDivider()
-
-        //Source name and publish date
-        Row(
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text(
-                text = results.source,
-                color = Color(0xFF005FB7),
-                fontSize = 14.sp
-            )
-            Text(" • ")
-            Text(
-                text = results.pubDate.take(11),
-                fontSize = 14.sp,
-                color = Color(0xFF74777F)
-            )
-        }
+        DetailImage(results.imageUrl)
+        MainContent(results)
     }
 }

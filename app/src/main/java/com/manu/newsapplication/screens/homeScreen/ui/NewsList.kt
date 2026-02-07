@@ -83,7 +83,7 @@ fun NewsList(
                         description = item.description?:"",
                         pubDate = item.pubDate?:"",
                         source = item.source_name?:"",
-                        sourceUrl = item.source_url?:""
+                        sourceUrl = item.link?:""
                     )
                 ) },
                 item = item

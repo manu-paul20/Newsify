@@ -30,10 +30,10 @@ class DetailsScreenViewModel @Inject constructor(
                     val news = event.results
                     offlineTodoDao.addToOfflineNews(
                         OfflineNews(
-                            title = news.title ?: "",
-                            description = news.description ?: "",
-                            source_name = news.source_name ?: "",
-                            pubDate = news.pubDate ?: ""
+                            title = news.title,
+                            description = news.description,
+                            source_name = news.source,
+                            pubDate = news.pubDate
                         )
                     )
                 }
@@ -50,13 +50,13 @@ class DetailsScreenViewModel @Inject constructor(
                 viewModelScope.launch {
                     bookMarksDao.addToBookMarks(
                         BookMarks(
-                            title = news.title ?: "",
-                            description = news.description ?: "",
-                            image_url = news.image_url ?: "",
-                            link = news.link ?: "",
-                            pubDate = news.pubDate ?: "",
-                            source_name = news.source_name ?: "",
-                            source_url = news.source_url ?: "",
+                            title = news.title,
+                            description = news.description,
+                            image_url = news.imageUrl,
+                            link = news.sourceUrl,
+                            pubDate = news.pubDate,
+                            source_name = news.source,
+                            source_url = news.sourceUrl,
                         )
                     )
                 }
@@ -73,13 +73,13 @@ class DetailsScreenViewModel @Inject constructor(
                 viewModelScope.launch {
                     bookMarksDao.deleteFromBookMarks(
                         BookMarks(
-                            title = news.title ?: "",
-                            description = news.description ?: "",
-                            image_url = news.image_url ?: "",
-                            link = news.link ?: "",
-                            pubDate = news.pubDate ?: "",
-                            source_name = news.source_name ?: "",
-                            source_url = news.source_url ?: "",
+                            title = news.title,
+                            description = news.description,
+                            image_url = news.imageUrl,
+                            link = news.sourceUrl,
+                            pubDate = news.pubDate,
+                            source_name = news.source,
+                            source_url = news.sourceUrl,
                         )
                     )
                 }
