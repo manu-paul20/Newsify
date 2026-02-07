@@ -1,12 +1,16 @@
 package com.manu.newsapplication.screens.newsDetailsScreen.ui
 
 import android.telecom.Call
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Bookmark
+import androidx.compose.material.icons.filled.SaveAlt
+import androidx.compose.material.icons.outlined.Bookmark
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FabPosition
@@ -16,6 +20,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
@@ -37,20 +42,23 @@ fun NewsDetailsScreen(
        topBar = {
            TopAppBar(
                title = {
-                   Row(
-                       modifier = Modifier.fillMaxWidth(),
-                   ) {
+                   Row{
                        IconButton(
-                           onClick = {},
-                           modifier = Modifier.weight(1f)
+                           onClick = {}
                        ) {
                            Icon(Icons.AutoMirrored.Default.ArrowBack,null)
                        }
+                       Spacer(Modifier.weight(1f))
 
                        IconButton(
                            onClick = {}
                        ) {
-                           Icon(Icons.Default.Bookmark,null)
+                           Icon(Icons.Outlined.Bookmark,null)
+                       }
+                       IconButton(
+                           onClick = {}
+                       ) {
+                           Icon(Icons.Default.SaveAlt,null)
                        }
                    }
                }
