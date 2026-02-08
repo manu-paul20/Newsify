@@ -1,5 +1,6 @@
 package com.manu.newsapplication.navigation
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -95,7 +96,7 @@ fun NavigationRoot(){
                             NewsDetailsScreen(
                                 results = it.results,
                                 onClickBack = {
-                                    navigator.navigate(Routes.HomeScreen)
+                                    navigator.goBack()
                                 }
                             )
                         }
