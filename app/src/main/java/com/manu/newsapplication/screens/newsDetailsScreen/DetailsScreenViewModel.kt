@@ -83,6 +83,11 @@ class DetailsScreenViewModel @Inject constructor(
                         )
                     )
                 }
+                _state.update {
+                    it.copy(
+                        isBookMarked = false
+                    )
+                }
             }
         }
     }
