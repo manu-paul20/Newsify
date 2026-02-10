@@ -81,14 +81,14 @@ fun NewsListItem(
                 verticalArrangement = Arrangement.spacedBy(10.dp)
             ) {
                 Text(
-                    text = item.title?:"No Title",
+                    text = item.title,
                     maxLines = 2,
                     fontWeight = FontWeight.ExtraBold,
                     fontSize = 16.sp,
                     color = Color(0xFF1A1C1E)
                 )
                 Text(
-                    text = item.description?:"",
+                    text = item.description,
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis,
                     fontWeight = FontWeight.Light,
@@ -99,8 +99,10 @@ fun NewsListItem(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = item.source_name?:"",
+                        text = item.source_name.take(10),
                         fontSize = 11.sp,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
                         color = Color(0xFF005FB7)
                     )
                     Text(" • ")
