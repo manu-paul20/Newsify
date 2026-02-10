@@ -11,13 +11,15 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class BookMarkViewModel @Inject constructor(
     repository: DatabaseRepository
 ): ViewModel(){
-    private val bookMarks = repository.getBookMarksDao().getBookMarks()
+    private val bookMarksDAO = repository.getBookMarksDao()
+    private val bookMarks = bookMarksDAO.getBookMarks()
    private val _state = MutableStateFlow(BookMarkStates())
 
     val state = combine(bookMarks,_state){bookMarks,state->
@@ -25,5 +27,15 @@ class BookMarkViewModel @Inject constructor(
             bookMarks = bookMarks
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), BookMarkStates())
+
+    fun onEvent(event: BookMarkEvents){
+        when(event){
+            is BookMarkEvents.DeleteBookMark -> {
+                viewModelScope.launch {
+                    bookMarksDAO.deleteFromBookMarks(event.news)
+                }
+            }
+        }
+    }
 
 }
