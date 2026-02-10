@@ -1,6 +1,6 @@
 package com.manu.newsapplication.screens.newsDetailsScreen
 
 data class DetailsScreenStates(
-    val isBookMarked: Boolean = false,
+    val item: Details = Details(),
     val isSaved: Boolean = false
 )

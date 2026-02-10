@@ -35,6 +35,9 @@ fun NewsDetailsScreen(
     val state = viewModel.state.collectAsStateWithLifecycle()
     val onEvent = viewModel::onEvent
 
+    onEvent(DetailsScreenEvents.UpdateInitialSate(results))
+
+
    Scaffold(
        topBar = {
            TopAppBar(
@@ -56,7 +59,7 @@ fun NewsDetailsScreen(
 
                        IconButton(
                            onClick = {
-                               if(state.value.isBookMarked){
+                               if(state.value.item.isBookMarked){
                                    onEvent(DetailsScreenEvents.RemoveBookMark(results))
                                }else{
                                    onEvent(DetailsScreenEvents.BookMarkNews(results))
@@ -64,7 +67,7 @@ fun NewsDetailsScreen(
                            }
                        ) {
                            Icon(
-                               imageVector = if(state.value.isBookMarked){
+                               imageVector = if(state.value.item.isBookMarked){
                                    Icons.Default.Bookmark
                                }else{
                                    Icons.Outlined.BookmarkAdd

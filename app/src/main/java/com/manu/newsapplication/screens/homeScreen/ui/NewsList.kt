@@ -23,6 +23,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.manu.newsapplication.database.entities.BookMarks
 import com.manu.newsapplication.retrofit.NetworkResponse
 import com.manu.newsapplication.screens.homeScreen.HomeScreenEvents
 import com.manu.newsapplication.screens.homeScreen.HomeScreenNavigation
@@ -83,10 +84,18 @@ fun NewsList(
                         description = item.description?:"",
                         pubDate = item.pubDate?:"",
                         source = item.source_name?:"",
-                        sourceUrl = item.link?:""
+                        sourceUrl = item.link?:"",
+                        isBookMarked = false
                     )
                 ) },
-                item = item
+                item = BookMarks(
+                    description = item.description?:"",
+                    image_url = item.image_url?:"",
+                    pubDate = item.pubDate?:"",
+                    source_name = item.source_name?:"",
+                    source_url = item.source_url?:"",
+                    title = item.title?:""
+                )
             )
 
 

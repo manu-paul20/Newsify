@@ -8,4 +8,6 @@ sealed interface DetailsScreenEvents{
     data class RemoveBookMark(val results: Details): DetailsScreenEvents
 
     data class SaveNews(val results: Details): DetailsScreenEvents
+
+    data class UpdateInitialSate(val results: Details): DetailsScreenEvents
 }

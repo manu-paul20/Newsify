@@ -4,6 +4,8 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Update
+import androidx.room.Upsert
 import com.manu.newsapplication.database.entities.BookMarks
 import com.manu.newsapplication.database.entities.OfflineNews
 import kotlinx.coroutines.flow.Flow
@@ -13,7 +15,7 @@ interface OfflineNewsDAO{
     @Query("SELECT * FROM OfflineNews")
     fun getOfflineNews(): Flow<List<OfflineNews>>
 
-    @Insert
+    @Upsert
     suspend fun addToOfflineNews(offlineNews: OfflineNews)
 
     @Delete

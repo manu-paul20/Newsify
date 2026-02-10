@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.ui.NavDisplay
+import com.manu.newsapplication.screens.bookMarksScreen.ui.BookMarksScreen
 import com.manu.newsapplication.screens.homeScreen.HomeScreen
 import com.manu.newsapplication.screens.homeScreen.HomeScreenNavigation
 import com.manu.newsapplication.screens.newsDetailsScreen.ui.NewsDetailsScreen
@@ -101,7 +102,9 @@ fun NavigationRoot(){
                             )
                         }
                         entry <Routes.BookMarksScreen>{
-
+                            BookMarksScreen(
+                                onClickNews = {navigator.navigate(Routes.NewsDetailsScreen(it))}
+                            )
                         }
                         entry <Routes.OfflineNewsScreen>{
 

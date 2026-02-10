@@ -25,6 +25,15 @@ class DetailsScreenViewModel @Inject constructor(
 
     fun onEvent(event: DetailsScreenEvents) {
         when (event) {
+
+            is DetailsScreenEvents.UpdateInitialSate->{
+                _state.update {
+                    it.copy(
+                        item = event.results
+                    )
+                }
+            }
+
             is DetailsScreenEvents.SaveNews -> {
                 viewModelScope.launch {
                     val news = event.results
@@ -46,49 +55,48 @@ class DetailsScreenViewModel @Inject constructor(
             }
 
             is DetailsScreenEvents.BookMarkNews -> {
-                val news = event.results
+                val result = event.results
                 viewModelScope.launch {
                     bookMarksDao.addToBookMarks(
                         BookMarks(
-                            title = news.title,
-                            description = news.description,
-                            image_url = news.imageUrl,
-                            link = news.sourceUrl,
-                            pubDate = news.pubDate,
-                            source_name = news.source,
-                            source_url = news.sourceUrl,
+                            description = result.description,
+                            image_url = result.imageUrl,
+                            pubDate = result.pubDate,
+                            source_name = result.source,
+                            source_url = result.sourceUrl,
+                            title = result.title
                         )
                     )
                 }
-
                 _state.update {
                     it.copy(
-                        isBookMarked = true
+                        item = it.item.copy(isBookMarked = true)
                     )
                 }
             }
 
             is DetailsScreenEvents.RemoveBookMark -> {
-                val news = event.results
+                val result = event.results
                 viewModelScope.launch {
                     bookMarksDao.deleteFromBookMarks(
                         BookMarks(
-                            title = news.title,
-                            description = news.description,
-                            image_url = news.imageUrl,
-                            link = news.sourceUrl,
-                            pubDate = news.pubDate,
-                            source_name = news.source,
-                            source_url = news.sourceUrl,
+                            description = result.description,
+                            image_url = result.imageUrl,
+                            pubDate = result.pubDate,
+                            source_name = result.source,
+                            source_url = result.sourceUrl,
+                            title = result.title
                         )
                     )
                 }
                 _state.update {
                     it.copy(
-                        isBookMarked = false
+                        item = it.item.copy(isBookMarked = false)
                     )
                 }
             }
+
+
         }
     }
 }
