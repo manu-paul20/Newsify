@@ -14,9 +14,11 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.HideImage
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -37,83 +39,100 @@ import com.manu.newsapplication.newsReponseModel.Results
 @Composable
 fun NewsListItem(
     onClickNews:()-> Unit,
-    item: BookMarks
+    isOfflineMode: Boolean,
+    isSelected: Boolean,
+    onSelect:(()-> Unit) ?,
+    item: BookMarks,
 ) {
-    Card(
-        shape = RoundedCornerShape(16.dp),
-        border = BorderStroke(1.dp,Color(0xFFE0E2EC)),
-        colors = CardDefaults.cardColors(
-            containerColor = Color(0xFFFFFFFF)
-        )
-    ) {
-        Row(
-            modifier = Modifier
-                .clickable{onClickNews()}
-                .fillMaxWidth(),
-            verticalAlignment = Alignment.Top
+    Row(
+        verticalAlignment = Alignment.CenterVertically
+    ){
+        Card(
+            modifier = Modifier.weight(1f),
+            shape = RoundedCornerShape(16.dp),
+            border = BorderStroke(1.dp, Color(0xFFE0E2EC)),
+            colors = CardDefaults.cardColors(
+                containerColor = Color(0xFFFFFFFF)
+            )
         ) {
-
-            Box(
+            Row(
                 modifier = Modifier
-                    .size(100.dp).padding(5.dp),
-            ){
-                SubcomposeAsyncImage(
-                    modifier = Modifier
-                        .aspectRatio(1.1f)
-                        .clip(RoundedCornerShape(12.dp))
-                    ,
-                    model = item.image_url,
-                    error = {
-                        Icon(Icons.Default.HideImage, null)
-                    },
-                    loading = {
-                        Box(
-                            contentAlignment = Alignment.Center
-                        ){CircularProgressIndicator()}
-                    },
-                    contentScale = ContentScale.Crop,
-                    contentDescription = null
-                )
-            }
-            Spacer(Modifier.width(10.dp))
-            Column(
-                modifier = Modifier.weight(1f).padding(3.dp),
-                verticalArrangement = Arrangement.spacedBy(10.dp)
+                    .clickable { onClickNews() }
+                    .fillMaxWidth(),
+                verticalAlignment = Alignment.Top
             ) {
-                Text(
-                    text = item.title,
-                    maxLines = 2,
-                    fontWeight = FontWeight.ExtraBold,
-                    fontSize = 16.sp,
-                    color = Color(0xFF1A1C1E)
-                )
-                Text(
-                    text = item.description,
-                    maxLines = 2,
-                    overflow = TextOverflow.Ellipsis,
-                    fontWeight = FontWeight.Light,
-                    fontSize = 14.sp,
-                    color = Color(0xFF44474E)
-                )
-                Row(
-                    verticalAlignment = Alignment.CenterVertically
+
+                Box(
+                    modifier = Modifier
+                        .size(100.dp)
+                        .padding(5.dp),
                 ) {
-                    Text(
-                        text = item.source_name.take(10),
-                        fontSize = 11.sp,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                        color = Color(0xFF005FB7)
-                    )
-                    Text(" • ")
-                    Text(
-                        text = item.pubDate?.substring(0,11)?:"",
-                        fontSize = 11.sp,
-                        color = Color(0xFF74777F)
+                    SubcomposeAsyncImage(
+                        modifier = Modifier
+                            .aspectRatio(1.1f)
+                            .clip(RoundedCornerShape(12.dp)),
+                        model = item.image_url,
+                        error = {
+                            Icon(Icons.Default.HideImage, null)
+                        },
+                        loading = {
+                            Box(
+                                contentAlignment = Alignment.Center
+                            ) { CircularProgressIndicator() }
+                        },
+                        contentScale = ContentScale.Crop,
+                        contentDescription = null
                     )
                 }
+                Spacer(Modifier.width(10.dp))
+                Column(
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(3.dp),
+                    verticalArrangement = Arrangement.spacedBy(10.dp)
+                ) {
+                    Text(
+                        text = item.title,
+                        maxLines = 2,
+                        fontWeight = FontWeight.ExtraBold,
+                        fontSize = 16.sp,
+                        color = Color(0xFF1A1C1E)
+                    )
+                    Text(
+                        text = item.description,
+                        maxLines = 2,
+                        overflow = TextOverflow.Ellipsis,
+                        fontWeight = FontWeight.Light,
+                        fontSize = 14.sp,
+                        color = Color(0xFF44474E)
+                    )
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = item.source_name.take(10),
+                            fontSize = 11.sp,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                            color = Color(0xFF005FB7)
+                        )
+                        Text(" • ")
+                        Text(
+                            text = item.pubDate?.substring(0, 11) ?: "",
+                            fontSize = 11.sp,
+                            color = Color(0xFF74777F)
+                        )
+                    }
 
+                }
             }
         }
+        //change it to check box
+       if(isOfflineMode){
+          Checkbox(
+              checked = isSelected,
+              onCheckedChange = { onSelect?.invoke() }
+          )
+       }
     }
 }

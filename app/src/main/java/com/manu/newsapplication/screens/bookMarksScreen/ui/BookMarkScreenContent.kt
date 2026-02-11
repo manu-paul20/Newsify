@@ -57,6 +57,9 @@ fun BookMarkContent(
                             )
                         )
                     },
+                    isSelected = false,
+                    isOfflineMode = false,
+                    onSelect = null,
                     item = it
                 )
             }

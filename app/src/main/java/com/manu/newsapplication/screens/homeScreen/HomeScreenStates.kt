@@ -11,5 +11,6 @@ data class HomeScreenStates(
     val resultsList : List<Results> = emptyList(),
     val searchQuery : String = "",
     val isShowingFailurePopup: Boolean = false,
-    val errorMessage: String = ""
+    val errorMessage: String = "",
+    val isLisItemSelected: Boolean = false
 )
