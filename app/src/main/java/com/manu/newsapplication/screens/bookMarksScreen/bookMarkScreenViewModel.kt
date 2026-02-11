@@ -28,14 +28,4 @@ class BookMarkViewModel @Inject constructor(
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), BookMarkStates())
 
-    fun onEvent(event: BookMarkEvents){
-        when(event){
-            is BookMarkEvents.DeleteBookMark -> {
-                viewModelScope.launch {
-                    bookMarksDAO.deleteFromBookMarks(event.news)
-                }
-            }
-        }
-    }
-
 }

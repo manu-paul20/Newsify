@@ -21,4 +21,7 @@ interface OfflineNewsDAO{
     @Delete
     suspend fun deleteFromOfflineNews(offlineNews: OfflineNews)
 
+    @Query("delete from offlinenews where isSelected=false")
+    suspend fun deleteSelected()
+
 }

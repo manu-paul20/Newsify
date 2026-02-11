@@ -1,4 +1,4 @@
-package com.manu.newsapplication.screens.bookMarksScreen.ui
+package com.manu.newsapplication.screens.offlineNewsScreen.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -12,15 +12,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.manu.newsapplication.database.entities.BookMarks
 import com.manu.newsapplication.screens.bookMarksScreen.BookMarkStates
 import com.manu.newsapplication.screens.homeScreen.ui.NewsListItem
 import com.manu.newsapplication.screens.newsDetailsScreen.Details
+import com.manu.newsapplication.screens.offlineNewsScreen.OfflineNewsScreenEvents
+import com.manu.newsapplication.screens.offlineNewsScreen.OfflineNewsScreenState
 
 @Composable
-fun BookMarkContent(
+fun OfflineNewsScreenContennt(
     modifier: Modifier,
     onClickNews: (Details) -> Unit,
-    state: BookMarkStates
+    state: OfflineNewsScreenState,
+    onEvent:(OfflineNewsScreenEvents)-> Unit
 ) {
     LazyColumn(
         modifier = modifier
@@ -28,37 +32,44 @@ fun BookMarkContent(
             .background(color = Color(0xFFFDFBFF))
             .fillMaxSize()
             .padding(horizontal = 10.dp),
-        verticalArrangement = if(state.bookMarks.isEmpty()){
+        verticalArrangement = if (state.offlineNews.isEmpty()) {
             Arrangement.Center
-        }else{
+        } else {
             Arrangement.spacedBy(16.dp)
         },
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        if(state.bookMarks.isEmpty()){
+        if (state.offlineNews.isEmpty()) {
             item {
                 Text("Nothing Here")
             }
-        }else{
-            items(state.bookMarks) {
+        } else {
+            items(state.offlineNews) {
                 NewsListItem(
                     onClickNews = {
                         onClickNews(
                             Details(
                                 title = it.title,
                                 description = it.description,
-                                imageUrl = it.image_url,
+                                imageUrl = "",
                                 pubDate = it.pubDate,
                                 source = it.source_name,
-                                sourceUrl = it.source_url,
+                                sourceUrl = "",
                                 isBookMarked = true
                             )
                         )
                     },
-                    isSelected = false,
-                    isOfflineMode = false,
-                    onSelect = null,
-                    item = it
+                    isSelected = it.isSelected,
+                    isOfflineMode = true,
+                    onSelect = {onEvent(OfflineNewsScreenEvents.SelectNews(it))},
+                    item = BookMarks(
+                        title = it.title,
+                        description = it.description,
+                        pubDate = it.pubDate,
+                        source_name = it.source_name,
+                        image_url = "",
+                        source_url = ""
+                    )
                 )
             }
         }

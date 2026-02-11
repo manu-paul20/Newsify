@@ -127,7 +127,6 @@ fun NewsListItem(
                 }
             }
         }
-        //change it to check box
        if(isOfflineMode){
           Checkbox(
               checked = isSelected,

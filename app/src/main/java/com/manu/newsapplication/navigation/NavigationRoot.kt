@@ -29,6 +29,7 @@ import com.manu.newsapplication.screens.bookMarksScreen.ui.BookMarksScreen
 import com.manu.newsapplication.screens.homeScreen.HomeScreen
 import com.manu.newsapplication.screens.homeScreen.HomeScreenNavigation
 import com.manu.newsapplication.screens.newsDetailsScreen.ui.NewsDetailsScreen
+import com.manu.newsapplication.screens.offlineNewsScreen.ui.OfflineNewsScreen
 import okhttp3.Route
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -107,7 +108,9 @@ fun NavigationRoot(){
                             )
                         }
                         entry <Routes.OfflineNewsScreen>{
-
+                            OfflineNewsScreen(
+                                onClickNews = {navigator.navigate(Routes.NewsDetailsScreen(it))}
+                            )
                         }
                     }
                 )
