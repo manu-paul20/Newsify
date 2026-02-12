@@ -45,6 +45,7 @@ fun NavigationRoot(){
     val localUriHandler = LocalUriHandler.current
     val currentRoute = navigationState.backStack[navigationState.topLevelRoute]?.lastOrNull()
     Scaffold(
+        floatingActionButton = {},
         bottomBar = {
             if(currentRoute is Routes.NewsDetailsScreen){
                 BottomAppBar(
