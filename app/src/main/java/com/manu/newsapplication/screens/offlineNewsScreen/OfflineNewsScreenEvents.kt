@@ -7,5 +7,4 @@ sealed interface OfflineNewsScreenEvents{
 
     data class SelectNews(val news: OfflineNews): OfflineNewsScreenEvents
 
-    object updateInitialState: OfflineNewsScreenEvents
 }

@@ -62,27 +62,29 @@ fun NewsListItem(
                 verticalAlignment = Alignment.Top
             ) {
 
-                Box(
-                    modifier = Modifier
-                        .size(100.dp)
-                        .padding(5.dp),
-                ) {
-                    SubcomposeAsyncImage(
+                if (!isOfflineMode){
+                    Box(
                         modifier = Modifier
-                            .aspectRatio(1.1f)
-                            .clip(RoundedCornerShape(12.dp)),
-                        model = item.image_url,
-                        error = {
-                            Icon(Icons.Default.HideImage, null)
-                        },
-                        loading = {
-                            Box(
-                                contentAlignment = Alignment.Center
-                            ) { CircularProgressIndicator() }
-                        },
-                        contentScale = ContentScale.Crop,
-                        contentDescription = null
-                    )
+                            .size(100.dp)
+                            .padding(5.dp),
+                    ) {
+                        SubcomposeAsyncImage(
+                            modifier = Modifier
+                                .aspectRatio(1.1f)
+                                .clip(RoundedCornerShape(12.dp)),
+                            model = item.image_url,
+                            error = {
+                                Icon(Icons.Default.HideImage, null)
+                            },
+                            loading = {
+                                Box(
+                                    contentAlignment = Alignment.Center
+                                ) { CircularProgressIndicator() }
+                            },
+                            contentScale = ContentScale.Crop,
+                            contentDescription = null
+                        )
+                    }
                 }
                 Spacer(Modifier.width(10.dp))
                 Column(

@@ -5,5 +5,5 @@ import com.manu.newsapplication.database.entities.OfflineNews
 data class OfflineNewsScreenState(
     val offlineNews : List<OfflineNews> = emptyList(),
     val isLoading: Boolean = false,
-    val isSelected : Boolean = false
+    val selectedTitles: Set<String> = emptySet()
 )

@@ -1,5 +1,6 @@
 package com.manu.newsapplication.screens.offlineNewsScreen
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.manu.newsapplication.repository.DatabaseRepository
@@ -24,7 +25,11 @@ class OfflineScreenViewModel @Inject constructor(
 
     val state = combine(offlineNews,_state){offlineNews,state->
         state.copy(
-            offlineNews = offlineNews
+            offlineNews = offlineNews.map {
+                it.copy(
+                    isSelected = _state.value.selectedTitles.contains(it.title)
+                )
+            }
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), OfflineNewsScreenState())
 
@@ -35,28 +40,27 @@ class OfflineScreenViewModel @Inject constructor(
                 viewModelScope.launch {
                     offlineNewsDAO.deleteSelected()
                     _state.update {
-                        it.copy(isLoading = false)
+                        it.copy(
+                            isLoading = false,
+                            selectedTitles = emptySet()
+                        )
                     }
                 }
             }
             is OfflineNewsScreenEvents.SelectNews -> {
-                _state.update {
-                    it.copy(
-                        isSelected = !it.isSelected
-                    )
-                }
                 viewModelScope.launch{
                     offlineNewsDAO.addToOfflineNews(event.news.copy(
-                        isSelected = _state.value.isSelected
+                        isSelected = !event.news.isSelected
                     ))
                 }
-            }
-
-            is OfflineNewsScreenEvents.updateInitialState -> {
                 _state.update {
-                    it.copy(
-                        offlineNews = it.offlineNews.map { it.copy(isSelected = false) }
-                    )
+                    val newSelection = _state.value.selectedTitles.toMutableSet()
+                    if(newSelection.contains(event.news.title)){
+                        newSelection.remove(event.news.title)
+                    }else{
+                        newSelection.add(event.news.title)
+                    }
+                    it.copy(selectedTitles = newSelection)
                 }
             }
         }
