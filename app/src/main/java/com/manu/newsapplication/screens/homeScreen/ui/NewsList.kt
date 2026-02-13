@@ -89,8 +89,7 @@ fun NewsList(
                     )
                 ) },
                 isOfflineMode = false,
-                isSelected = false,
-                onSelect = null,
+               onDeleteOfflineNews = null,
                 item = BookMarks(
                     description = item.description?:"",
                     image_url = item.image_url?:"",

@@ -30,9 +30,6 @@ fun OfflineNewsScreenContennt(
     state: OfflineNewsScreenState,
     onEvent:(OfflineNewsScreenEvents)-> Unit
 ) {
-    LaunchedEffect(Unit){
-        onEvent(OfflineNewsScreenEvents.UpdateInitialState)
-    }
     LazyColumn(
         modifier = modifier
             .background(color = Color(0xFFFDFBFF))
@@ -79,9 +76,8 @@ fun OfflineNewsScreenContennt(
                             )
                         )
                     },
-                    isSelected = it.isSelected,
                     isOfflineMode = true,
-                    onSelect = {onEvent(OfflineNewsScreenEvents.SelectNews(it))},
+                    onDeleteOfflineNews = {onEvent(OfflineNewsScreenEvents.DeleteNews(it))},
                     item = BookMarks(
                         title = it.title,
                         description = it.description,

@@ -55,9 +55,8 @@ fun BookMarkContent(
                             )
                         )
                     },
-                    isSelected = false,
                     isOfflineMode = false,
-                    onSelect = null,
+                    onDeleteOfflineNews = null,
                     item = it
                 )
             }
