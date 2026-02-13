@@ -36,9 +36,7 @@ import com.manu.newsapplication.screens.newsDetailsScreen.DetailsScreenStates
 @Composable
 fun DetailsScreenContent(
     modifier: Modifier,
-    results: Details,
-    state: DetailsScreenStates,
-    onEvent:(DetailsScreenEvents)-> Unit
+    results: Details
 ) {
     Column(
         modifier = modifier

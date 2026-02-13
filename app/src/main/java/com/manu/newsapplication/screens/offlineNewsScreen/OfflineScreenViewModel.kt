@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -25,11 +26,7 @@ class OfflineScreenViewModel @Inject constructor(
 
     val state = combine(offlineNews,_state){offlineNews,state->
         state.copy(
-            offlineNews = offlineNews.map {
-                it.copy(
-                    isSelected = _state.value.selectedTitles.contains(it.title)
-                )
-            }
+            offlineNews = offlineNews
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), OfflineNewsScreenState())
 
@@ -41,8 +38,7 @@ class OfflineScreenViewModel @Inject constructor(
                     offlineNewsDAO.deleteSelected()
                     _state.update {
                         it.copy(
-                            isLoading = false,
-                            selectedTitles = emptySet()
+                            isLoading = false
                         )
                     }
                 }
@@ -53,14 +49,21 @@ class OfflineScreenViewModel @Inject constructor(
                         isSelected = !event.news.isSelected
                     ))
                 }
+
+            }
+            is OfflineNewsScreenEvents.UpdateInitialState -> {
                 _state.update {
-                    val newSelection = _state.value.selectedTitles.toMutableSet()
-                    if(newSelection.contains(event.news.title)){
-                        newSelection.remove(event.news.title)
-                    }else{
-                        newSelection.add(event.news.title)
+                    it.copy(isLoading = true)
+                }
+
+                viewModelScope.launch {
+                    for (news in _state.value.offlineNews) {
+                        offlineNewsDAO.addToOfflineNews(news.copy(isSelected = false))
                     }
-                    it.copy(selectedTitles = newSelection)
+                    _state.update {
+                        it.copy(isLoading = false)
+                    }
+
                 }
             }
         }

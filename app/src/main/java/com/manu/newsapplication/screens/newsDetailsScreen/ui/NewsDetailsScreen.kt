@@ -102,9 +102,7 @@ fun NewsDetailsScreen(
    ) {innerPadding->
        DetailsScreenContent(
            modifier = Modifier.padding(innerPadding),
-           results = results,
-           state = state.value,
-           onEvent = onEvent
+           results = results
        )
    }
 }
