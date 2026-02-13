@@ -18,6 +18,9 @@ sealed interface Routes : NavKey {
     data object OfflineNewsScreen : Routes
 
     @Serializable
-    data class NewsDetailsScreen(val results: Details): Routes
+    data class NewsDetailsScreen(
+        val results: Details,
+        val isOfflineMode: Boolean
+    ): Routes
 
 }

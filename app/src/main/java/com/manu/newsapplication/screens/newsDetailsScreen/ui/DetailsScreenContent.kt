@@ -35,6 +35,7 @@ import com.manu.newsapplication.screens.newsDetailsScreen.DetailsScreenStates
 
 @Composable
 fun DetailsScreenContent(
+    isOfflineMode: Boolean,
     modifier: Modifier,
     results: Details
 ) {
@@ -45,7 +46,9 @@ fun DetailsScreenContent(
             .background(Color(0xFFFFFBFE)),
         verticalArrangement = Arrangement.Top
     ) {
-        DetailImage(results.imageUrl)
+        if(!isOfflineMode){
+            DetailImage(results.imageUrl)
+        }
         Spacer(Modifier.height(16.dp))
         MainContent(results)
     }

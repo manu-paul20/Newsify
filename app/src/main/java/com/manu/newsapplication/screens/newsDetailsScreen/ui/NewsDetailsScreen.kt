@@ -30,6 +30,7 @@ import com.manu.newsapplication.screens.newsDetailsScreen.DetailsScreenViewModel
 fun NewsDetailsScreen(
     results: Details,
     onClickBack:()-> Unit,
+    isOfflineMode: Boolean,
     viewModel: DetailsScreenViewModel = hiltViewModel()
 ) {
     val state = viewModel.state.collectAsStateWithLifecycle()
@@ -102,6 +103,7 @@ fun NewsDetailsScreen(
    ) {innerPadding->
        DetailsScreenContent(
            modifier = Modifier.padding(innerPadding),
+           isOfflineMode = isOfflineMode,
            results = results
        )
    }
