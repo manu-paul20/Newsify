@@ -43,7 +43,6 @@ class HomeScreenViewModel @Inject constructor(
                                 query = event.searchQuery,
                                 page = null
                             )
-                            Log.i("RESPONSE",response.body().toString())
                             if (response.isSuccessful && response.body() != null) {
                                 val results = response.body()?.results ?: emptyList()
                                 _state.update { st ->

@@ -60,6 +60,7 @@ class OfflineScreenViewModel @Inject constructor(
                     for (news in _state.value.offlineNews) {
                         offlineNewsDAO.addToOfflineNews(news.copy(isSelected = false))
                     }
+                    Log.i("stat","${state.value.offlineNews}")
                     _state.update {
                         it.copy(isLoading = false)
                     }
