@@ -57,6 +57,7 @@ fun BookMarkContent(
                     },
                     isOfflineMode = false,
                     onDeleteOfflineNews = null,
+                    modifier = Modifier,
                     item = it
                 )
             }

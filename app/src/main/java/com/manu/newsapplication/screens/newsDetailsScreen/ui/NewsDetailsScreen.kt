@@ -58,43 +58,45 @@ fun NewsDetailsScreen(
                        }
                        Spacer(Modifier.weight(1f))
 
-                       IconButton(
-                           onClick = {
-                               if(state.value.item.isBookMarked){
-                                   onEvent(DetailsScreenEvents.RemoveBookMark(results))
-                               }else{
-                                   onEvent(DetailsScreenEvents.BookMarkNews(results))
+                       if(!isOfflineMode){
+                           IconButton(
+                               onClick = {
+                                   if (state.value.item.isBookMarked) {
+                                       onEvent(DetailsScreenEvents.RemoveBookMark(results))
+                                   } else {
+                                       onEvent(DetailsScreenEvents.BookMarkNews(results))
+                                   }
                                }
+                           ) {
+                               Icon(
+                                   imageVector = if (state.value.item.isBookMarked) {
+                                       Icons.Default.Bookmark
+                                   } else {
+                                       Icons.Outlined.BookmarkAdd
+                                   },
+                                   contentDescription = null,
+                                   tint = Color(0xFF1A1C1E)
+                               )
                            }
-                       ) {
-                           Icon(
-                               imageVector = if(state.value.item.isBookMarked){
-                                   Icons.Default.Bookmark
-                               }else{
-                                   Icons.Outlined.BookmarkAdd
-                               },
-                               contentDescription = null,
-                               tint = Color(0xFF1A1C1E)
-                           )
-                       }
-                       IconButton(
-                           onClick = {
-                               if (!state.value.isSaved){
-                                   onEvent(DetailsScreenEvents.SaveNews(results))
+                           IconButton(
+                               onClick = {
+                                   if (!state.value.isSaved) {
+                                       onEvent(DetailsScreenEvents.SaveNews(results))
+                                   }
                                }
+                           ) {
+                               Icon(
+                                   imageVector = if (state.value.isSaved) {
+                                       Icons.Default.Check
+                                   } else {
+                                       Icons.Default.SaveAlt
+                                   },
+                                   contentDescription = null,
+                                   tint = Color(0xFF1A1C1E)
+
+                               )
+
                            }
-                       ) {
-                           Icon(
-                               imageVector = if(state.value.isSaved){
-                                   Icons.Default.Check
-                               }else{
-                                   Icons.Default.SaveAlt
-                               },
-                               contentDescription = null,
-                               tint = Color(0xFF1A1C1E)
-
-                           )
-
                        }
                    }
                }

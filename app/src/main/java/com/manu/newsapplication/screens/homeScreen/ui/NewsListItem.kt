@@ -42,10 +42,12 @@ import com.manu.newsapplication.newsReponseModel.Results
 fun NewsListItem(
     onClickNews:()-> Unit,
     isOfflineMode: Boolean,
+    modifier: Modifier,
     onDeleteOfflineNews:(()-> Unit) ?,
     item: BookMarks,
 ) {
     Row(
+        modifier = modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
     ){
         Card(

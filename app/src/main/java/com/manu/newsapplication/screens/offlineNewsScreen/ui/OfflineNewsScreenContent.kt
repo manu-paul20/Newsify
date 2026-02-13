@@ -1,6 +1,8 @@
 package com.manu.newsapplication.screens.offlineNewsScreen.ui
 
 import android.util.Log
+import androidx.compose.animation.core.animate
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -76,6 +78,10 @@ fun OfflineNewsScreenContennt(
                             )
                         )
                     },
+                    modifier = Modifier.animateItem(
+                        fadeInSpec = tween(500),
+                        fadeOutSpec = tween(300)
+                    ),
                     isOfflineMode = true,
                     onDeleteOfflineNews = {onEvent(OfflineNewsScreenEvents.DeleteNews(it))},
                     item = BookMarks(

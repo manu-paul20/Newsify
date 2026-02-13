@@ -40,24 +40,26 @@ fun NavigationRoot(){
         floatingActionButton = {},
         bottomBar = {
             if(currentRoute is Routes.NewsDetailsScreen){
-                BottomAppBar(
-                    tonalElevation = BottomAppBarDefaults.ContainerElevation,
-                    content = {
-                        Button(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(10.dp),
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = Color(0xFF201A19)
-                            ),
-                            onClick = {
-                             localUriHandler.openUri(currentRoute.results.sourceUrl)
+                if(!currentRoute.isOfflineMode){
+                    BottomAppBar(
+                        tonalElevation = BottomAppBarDefaults.ContainerElevation,
+                        content = {
+                            Button(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(10.dp),
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = Color(0xFF201A19)
+                                ),
+                                onClick = {
+                                    localUriHandler.openUri(currentRoute.results.sourceUrl)
+                                }
+                            ) {
+                                Text("Read full news")
                             }
-                        ) {
-                            Text("Read full news")
                         }
-                    }
-                )
+                    )
+                }
             }else{
                 BottomNavigationBar(
                     selectedKey = navigationState.topLevelRoute,

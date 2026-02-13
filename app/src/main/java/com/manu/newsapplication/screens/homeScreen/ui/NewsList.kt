@@ -89,6 +89,7 @@ fun NewsList(
                     )
                 ) },
                 isOfflineMode = false,
+                modifier = Modifier,
                onDeleteOfflineNews = null,
                 item = BookMarks(
                     description = item.description?:"",
