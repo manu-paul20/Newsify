@@ -1,5 +1,11 @@
 package com.manu.newsapplication.navigation
 
+import androidx.compose.animation.AnimatedContentTransitionScope
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -71,6 +77,13 @@ fun NavigationRoot(){
         },
     ) {_->
         NavDisplay(
+            transitionSpec = {
+                slideInHorizontally { it }+ fadeIn() togetherWith
+                        slideOutHorizontally { -it } + fadeOut()
+            },
+            popTransitionSpec = {
+                slideInHorizontally{-it}.togetherWith(slideOutHorizontally { it })
+            },
             modifier = Modifier.fillMaxSize(),
             onBack = {
                 navigator.goBack()
