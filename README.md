@@ -55,8 +55,6 @@ Click below to download the app:
 
 👉 **Download Newsify APK**: **[Download Here](https://manupaul.vercel.app/apks/Newsify.apk)**
 
-*(Replace `YOUR_DOWNLOAD_LINK_HERE` with your actual link)*
-
 
 ---
 
