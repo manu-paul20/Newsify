@@ -58,7 +58,7 @@ class HomeScreenViewModel @Inject constructor(
                             } else {
                                 _state.update {
                                     it.copy(
-                                        errorMessage = response.message(),
+                                        errorMessage = "Seems like something went wrong\nTry again after some times",
                                         isShowingFailurePopup = true,
                                         initialResponseStatus = NetworkResponse.Failure(response.message())
                                     )
@@ -68,7 +68,7 @@ class HomeScreenViewModel @Inject constructor(
                         } catch (e: Exception) {
                             _state.update {
                                 it.copy(
-                                    errorMessage = e.message.toString(),
+                                    errorMessage = "No Internet Connection",
                                     isShowingFailurePopup = true,
                                     initialResponseStatus = NetworkResponse.Failure("Something went wrong")
                                 )

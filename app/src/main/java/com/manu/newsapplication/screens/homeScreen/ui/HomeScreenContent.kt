@@ -37,7 +37,11 @@ fun HomeScreenContent(
     }
 
     if(state.isShowingFailurePopup){
-        FailurePopUp(state,onEvent)
+        FailurePopUp(
+            state = state,
+            onEvent = onEvent,
+            onClickOfflineNews = navigation.offlineNews
+            )
     }
 
     when(state.initialResponseStatus){

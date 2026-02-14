@@ -19,6 +19,7 @@ import com.manu.newsapplication.screens.homeScreen.HomeScreenStates
 @Composable
 fun FailurePopUp(
   state: HomeScreenStates,
+  onClickOfflineNews:()-> Unit,
     onEvent:(HomeScreenEvents)-> Unit
 ) {
     AlertDialog(
@@ -33,8 +34,7 @@ fun FailurePopUp(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text("Oops! Something went wrong 🤔")
-                Text(state.errorMessage, fontSize = 18.sp)
+                Text(state.errorMessage)
             }
         },
         confirmButton = {
@@ -52,7 +52,7 @@ fun FailurePopUp(
             FilledTonalButton(
                 shape = RoundedCornerShape(20.dp),
                 onClick = {
-
+                        onClickOfflineNews()
                 }
             ) {
                 Text("Offline News")
