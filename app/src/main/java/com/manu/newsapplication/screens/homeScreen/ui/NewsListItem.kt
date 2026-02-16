@@ -95,7 +95,7 @@ fun NewsListItem(
                     ) {
                         Text(
                             text = item.source_name.take(10),
-                            fontSize = 11.sp,
+                            fontSize = 12.sp,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
                             color = Color(0xFF005FB7)
@@ -103,7 +103,7 @@ fun NewsListItem(
                         Text(" • ")
                         Text(
                             text = item.pubDate?.substring(0, 11) ?: "",
-                            fontSize = 11.sp,
+                            fontSize = 12.sp,
                             color = Color(0xFF74777F)
                         )
                     }

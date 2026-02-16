@@ -46,7 +46,10 @@ fun OfflineNewsScreen(
                         TextButton(
                             onClick = {onEvent(OfflineNewsScreenEvents.DeleteAllNews)}
                         ){
-                            Text("Delete All")
+                            Text(
+                                text = "Delete All",
+                                color = Color.Red
+                            )
                         }
                     }
                 },
