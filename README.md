@@ -53,7 +53,7 @@ To run the project, you need an API key:
 
 Click below to download the app:
 
-[![Download APK](https://img.shields.io/badge/Download-APK-28a745?style=for-the-badge&logo=android)](https://my-portfolio-mu-indol-71.vercel.app/apks/Newsify.apk)
+[![Download APK](https://img.shields.io/badge/Download-APK-28a745?style=for-the-badge&logo=android)](https://manupaul.vercel.app/apks/Newsify.apk)
 
 
 ---
