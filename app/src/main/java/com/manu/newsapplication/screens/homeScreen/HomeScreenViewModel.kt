@@ -1,11 +1,11 @@
 package com.manu.newsapplication.screens.homeScreen
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.manu.newsapplication.constants.MyConstants
 import com.manu.newsapplication.retrofit.ApiRequests
 import com.manu.newsapplication.retrofit.NetworkResponse
+import com.manu.newsapplication.screens.newsDetailsScreen.Details
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -45,12 +45,23 @@ class HomeScreenViewModel @Inject constructor(
                             )
                             if (response.isSuccessful && response.body() != null) {
                                 val results = response.body()?.results ?: emptyList()
+                                val newsList = results.filter {
+                                    it.language!!.lowercase() == "english"
+                                }.map {
+                                    Details(
+                                        title = it.title,
+                                        source = it.source_name ?: "",
+                                        pubDate = it.pubDate ?: "",
+                                        imageUrl = it.image_url ?: "",
+                                        description = it.image_url ?: "",
+                                        sourceUrl = it.source_url ?: "",
+                                        isBookMarked = false
+                                    )
+                                }
                                 _state.update { st ->
                                         st.copy(
                                             initialResponseStatus = NetworkResponse.Success,
-                                            resultsList = results.distinctBy { it.title }.filter {
-                                                it.language?.lowercase() == "english"
-                                                                                              },
+                                            resultsList = newsList.distinctBy { it.title },
                                             nextPage = response.body()!!.nextPage,
                                             isShowingFailurePopup = false
                                         )
@@ -104,14 +115,23 @@ class HomeScreenViewModel @Inject constructor(
                             )
                             if (response.isSuccessful && response.body() != null) {
                                 val results = response.body()!!.results
+                                val newsList = results.filter {
+                                    it.language!!.lowercase() == "english"
+                                }.map {
+                                    Details(
+                                        title = it.title,
+                                        source = it.source_name ?: "",
+                                        pubDate = it.pubDate ?: "",
+                                        imageUrl = it.image_url ?: "",
+                                        description = it.image_url ?: "",
+                                        sourceUrl = it.source_url ?: "",
+                                        isBookMarked = false
+                                    )
+                                }
                                 _state.update { st ->
                                     st.copy(
                                         newPageResponseStaus = NetworkResponse.Success,
-                                        resultsList = (_state.value.resultsList + results.filter {
-                                            it.language!!.lowercase() == "english"
-                                        }).distinctBy {
-                                            it.title
-                                        },
+                                        resultsList = (_state.value.resultsList + newsList).distinctBy { it.title },
                                         nextPage = response.body()!!.nextPage
                                     )
                                 }

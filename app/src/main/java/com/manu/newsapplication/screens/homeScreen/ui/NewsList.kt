@@ -69,36 +69,26 @@ fun NewsList(
                 }
             }
         }
-        items(state.resultsList.size) { index ->
+        items(
+            count = state.resultsList.size,
+            key = {index->
+                state.resultsList[index].title?:index.toString()
+            }
+            ) { index ->
             if (index == state.resultsList.size - 1 &&
                 state.newPageResponseStaus is NetworkResponse.Success
             ) {
                 onEvent(HomeScreenEvents.GetNextPage)
             }
-            val item = state.resultsList[index]
+            val newsItem = state.resultsList[index]
             NewsListItem(
                 onClickNews = { navigation.newsDetails(
-                    Details(
-                        imageUrl = item.image_url?:"",
-                        title = item.title?:"",
-                        description = item.description?:"",
-                        pubDate = item.pubDate?:"",
-                        source = item.source_name?:"",
-                        sourceUrl = item.link?:"",
-                        isBookMarked = false
-                    )
+                    newsItem
                 ) },
                 isOfflineMode = false,
                 modifier = Modifier,
                onDeleteOfflineNews = null,
-                item = BookMarks(
-                    description = item.description?:"",
-                    image_url = item.image_url?:"",
-                    pubDate = item.pubDate?:"",
-                    source_name = item.source_name?:"",
-                    source_url = item.source_url?:"",
-                    title = item.title?:""
-                )
+                item = newsItem
             )
 
 

@@ -37,6 +37,7 @@ import androidx.compose.ui.unit.sp
 import coil3.compose.SubcomposeAsyncImage
 import com.manu.newsapplication.database.entities.BookMarks
 import com.manu.newsapplication.newsReponseModel.Results
+import com.manu.newsapplication.screens.newsDetailsScreen.Details
 
 @Composable
 fun NewsListItem(
@@ -44,7 +45,7 @@ fun NewsListItem(
     isOfflineMode: Boolean,
     modifier: Modifier,
     onDeleteOfflineNews:(()-> Unit) ?,
-    item: BookMarks,
+    item: Details,
 ) {
     Row(
         modifier = modifier.fillMaxWidth(),
@@ -66,7 +67,7 @@ fun NewsListItem(
             ) {
 
                 if (!isOfflineMode){
-                   ListItemImage(item.image_url)
+                   ListItemImage(item.imageUrl)
                 }
                 Spacer(Modifier.width(10.dp))
                 Column(
@@ -76,7 +77,7 @@ fun NewsListItem(
                     verticalArrangement = Arrangement.spacedBy(10.dp)
                 ) {
                     Text(
-                        text = item.title,
+                        text = item.title?:"",
                         maxLines = 2,
                         fontWeight = FontWeight.ExtraBold,
                         fontSize = 16.sp,
@@ -94,7 +95,7 @@ fun NewsListItem(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
-                            text = item.source_name.take(10),
+                            text = item.source.take(10),
                             fontSize = 12.sp,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
@@ -102,7 +103,7 @@ fun NewsListItem(
                         )
                         Text(" • ")
                         Text(
-                            text = item.pubDate?.substring(0, 11) ?: "",
+                            text = item.pubDate.substring(0, 11) ?: "",
                             fontSize = 12.sp,
                             color = Color(0xFF74777F)
                         )

@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Details(
     val imageUrl: String = "",
-    val title: String = "",
+    val title: String? = "",
     val description: String = "",
     val pubDate: String = "",
     val source: String = "",
