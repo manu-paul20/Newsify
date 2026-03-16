@@ -39,7 +39,7 @@ class DetailsScreenViewModel @Inject constructor(
                     val news = event.results
                     offlineTodoDao.addToOfflineNews(
                         OfflineNews(
-                            title = news.title,
+                            title = news.title?:"",
                             description = news.description,
                             source_name = news.source,
                             pubDate = news.pubDate
@@ -64,7 +64,7 @@ class DetailsScreenViewModel @Inject constructor(
                             pubDate = result.pubDate,
                             source_name = result.source,
                             source_url = result.sourceUrl,
-                            title = result.title
+                            title = result.title?:""
                         )
                     )
                 }
@@ -85,7 +85,7 @@ class DetailsScreenViewModel @Inject constructor(
                             pubDate = result.pubDate,
                             source_name = result.source,
                             source_url = result.sourceUrl,
-                            title = result.title
+                            title = result.title?:""
                         )
                     )
                 }

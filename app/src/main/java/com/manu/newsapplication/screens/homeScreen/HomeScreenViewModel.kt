@@ -123,7 +123,7 @@ class HomeScreenViewModel @Inject constructor(
                                         source = it.source_name ?: "",
                                         pubDate = it.pubDate ?: "",
                                         imageUrl = it.image_url ?: "",
-                                        description = it.image_url ?: "",
+                                        description = it.description ?: "",
                                         sourceUrl = it.source_url ?: "",
                                         isBookMarked = false
                                     )

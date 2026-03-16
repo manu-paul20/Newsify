@@ -47,10 +47,10 @@ fun BookMarkContent(
                             Details(
                                 title = it.title,
                                 description = it.description,
-                                imageUrl = it.image_url,
+                                imageUrl = it.imageUrl,
                                 pubDate = it.pubDate,
-                                source = it.source_name,
-                                sourceUrl = it.source_url,
+                                source = it.source,
+                                sourceUrl = it.sourceUrl,
                                 isBookMarked = true
                             )
                         )

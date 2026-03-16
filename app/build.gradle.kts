@@ -11,9 +11,7 @@ plugins {
 
 android {
     namespace = "com.manu.newsapplication"
-    compileSdk {
-        version = release(36)
-    }
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.manu.newsapplication"
@@ -94,5 +92,9 @@ dependencies {
     //Coil
     implementation(libs.coil.network.okhttp)
     implementation(libs.coil.compose)
+
+    // Force concurrent-futures version to resolve conflict
+    implementation(libs.androidx.concurrent.futures)
+    androidTestImplementation(libs.androidx.concurrent.futures)
 
 }

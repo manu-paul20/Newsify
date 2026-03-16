@@ -21,7 +21,7 @@ fun MainContent(
 ) {
     //title
     Text(
-        text = news.title,
+        text = news.title?:"",
         color = Color(0xFF201A19),
         fontSize = 24.sp,
         fontWeight = FontWeight.Bold,

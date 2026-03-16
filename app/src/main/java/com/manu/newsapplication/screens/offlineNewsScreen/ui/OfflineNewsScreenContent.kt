@@ -63,16 +63,7 @@ fun OfflineNewsScreenContent(
                 NewsListItem(
                     onClickNews = {
                         onClickNews(
-                            Details(
-                                title = it.title,
-                                description = it.description,
-                                imageUrl = "",
-                                pubDate = it.pubDate,
-                                source = it.source_name,
-                                sourceUrl = "",
-
-                                isBookMarked = true
-                            )
+                           it
                         )
                     },
                     modifier = Modifier.animateItem(
@@ -81,14 +72,7 @@ fun OfflineNewsScreenContent(
                     ),
                     isOfflineMode = true,
                     onDeleteOfflineNews = {onEvent(OfflineNewsScreenEvents.DeleteNews(it))},
-                    item = BookMarks(
-                        title = it.title,
-                        description = it.description,
-                        pubDate = it.pubDate,
-                        source_name = it.source_name,
-                        image_url = "",
-                        source_url = ""
-                    )
+                    item = it
                 )
             }
         }
